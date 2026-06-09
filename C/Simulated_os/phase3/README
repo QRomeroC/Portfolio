@@ -1,9 +1,0 @@
-README
-
-	Couldn't get it compile I don't know what was wrong with my declaration of my
-	sem table. 
-	
-	Couldn't figure out how to compose Spawn if kernel spawn was to be called by it 
-	or if kernel spawn calls spork or not
-	
-	how to use terminate in spawn
