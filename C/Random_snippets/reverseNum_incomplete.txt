@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+void reverseNum(int n); // Correct function prototype
+int num;
+
+int main(void) {
+    int ret;
+
+    while ((ret = scanf("%d", &num)) == 1) {
+        if (num < 0) {
+            fprintf(stderr, "Negative numbers not accepted\n");
+            return 1;
+        } else {
+            reverseNum(num);
+        }
+    }
+
+    if (ret == EOF) {
+        return 0; // Normal end of input
+    } else {
+        fprintf(stderr, "Value was not an integer\n");
+        return 1; // Error for non-integer input
+    }
+}
+
+void reverseNum(int n) {
+    int orgNum = n;
+    int revNum = 0; // Initialize the reversed number to 0
+    int rem;
+
+    while (n != 0) {
+        rem = n % 10;
+        revNum = revNum * 10 + rem;
+        n /= 10;
+    }
+
+    printf("%d\n", orgNum + revNum); // Print the sum of original and reversed number
+}

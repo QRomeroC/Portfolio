@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+void findPrime();
+bool isPrime();
+int num;
+
+int main(void){
+	int ret = scanf("%d", &num);
+	if (ret = 0){
+		fprintf(stderr, "Error: input is not a number\n");
+		return 1;
+	}
+	else {
+		if (num < 0){
+			fprintf(stderr, "Error: input value %d is not positive\n", num);
+			return 1;
+		}
+		else {
+			findPrime(num);
+		}
+	}
+		return 0;
+}
+
+void findPrime(int n){
+	bool found = false;
+	n = n + 1;
+	while (!found){
+		found = isPrime(n);
+		n++;
+	}
+	printf("%d\n", n - 1);
+}
+
+bool isPrime(int n){
+	for (int i = 2; i <= (n/2); i++){
+		if (n % i == 0){
+			return false;
+		}
+	}
+	return true;
+}

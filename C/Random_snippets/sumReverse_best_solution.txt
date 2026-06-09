@@ -1,0 +1,53 @@
+/*
+ * File: sumReverse.c
+ * Author: Eric Anson
+ * Purpose: Read in a sequence of integers; for each number
+ * calculate the sum of that number and its reverse and print out that
+ * value.
+ */
+#include <stdio.h>
+
+/*
+ * revNum(n) -- Takes a positive integer n and returns the number
+ * formed by reversing the digits of n. (e.g. revNum(540) = 45)
+ */
+int revNum(int n) {
+  int d, rev;
+
+  rev = 0;
+
+  while (n > 0) {
+    d = n % 10;
+    rev = rev * 10 + d;
+    n = n/10;
+  }
+
+  return rev;
+}
+
+/*
+ * main() Reads in a sequence of positive integers and prints the sumReverse
+ * for each one.
+ */
+int main() {
+  int n, status, errStat;
+
+  errStat = 0;
+
+  while ((status = scanf("%d", &n)) > 0) {
+    if (n <= 0) {
+      fprintf(stderr, "Error: input value %d is not positive\n", n);
+      errStat = 1;
+      continue;
+    }
+
+    printf("%d\n", n + revNum(n));
+  }
+
+  if (status != EOF) {
+    fprintf(stderr, "Error: Non-integer value in input\n");
+    return 1;
+  }
+
+  return errStat;
+}

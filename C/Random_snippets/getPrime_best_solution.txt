@@ -1,0 +1,72 @@
+/*
+ * File: getPrime.c
+ * Author: Eric Anson
+ * Purpose: Reads in a positive integer m from stdin and prints
+ * the smallest prime p such that p >= m.
+ */
+#include <stdio.h>
+
+/*
+ * isPrime(n) -- returns true if n is prime, false otherwise.  Assumes
+ * n is positive.
+ */
+int isPrime(int n) {
+  int i;
+
+  /* 1 is not prime */
+  if (n < 2) {
+    return 0;
+  }
+
+  /* 2 is prime */
+  if (n == 2) {
+    return 1;
+  }
+
+  if (n % 2 == 0) {  /* even number */
+    return 0;
+  }
+  /* now we will just look to see if there are odd integers
+   * that divide n.
+   */
+  i = 3;
+  while (n >= i * i) {
+    if (n % i == 0)
+      return 0;
+    i += 2;
+  }
+
+  return 1;
+}
+
+/*
+ * nextPrime(n)
+ * Takes an integer n and returns the smallest prime >= n
+ */
+int nextPrime (int n) {
+  while (!isPrime(n)) {
+    ++n;
+  }
+  return n;
+}
+
+/*
+ * main() -- Reads in a number and then prints out the next prime.
+ */
+int main() {
+  int m, status;
+
+  status = scanf("%d", &m);
+  if (status < 1) {
+    fprintf(stderr, "Error reading input\n");
+    return 1;
+  }
+  if (m <= 0) {
+    fprintf(stderr, "Error: %d is not a positive number\n", m);
+    return 1;
+  }
+
+  printf("%d\n", nextPrime(m+1));
+
+  return 0;
+}

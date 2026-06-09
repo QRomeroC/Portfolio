@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+void reverseNum();
+int ret,num;
+
+int main( void ){
+        while (scanf("%d", &num) == 1){
+                ret = scanf("%d", &num);
+                while (ret == 1){
+                        if (num < 0){
+                                fprintf(stderr, "negiative numbers not accpeted\n");
+                                return 1;
+                        }
+                        else {
+                                reverseNum(num);
+                        }
+                        ret = scanf("%d", &num);
+                }
+        }
+
+        if (ret != EOF){
+                fprintf(stderr, "value was not an integer\n");
+                return 1;
+        }
+        else {
+                return 0;
+        }
+}
+
+void reverseNum(int n){
+        int orgNum = n;
+        int revNum,rem;
+
+        while (n != 0 ){
+                rem = n % 10;
+                revNum = revNum * 10 + rem;
+                n /= 10;
+        }
+
+        printf("%d\n", orgNum + revNum);
+}

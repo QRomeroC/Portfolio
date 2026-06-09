@@ -1,0 +1,55 @@
+/*
+ * File:  isFactorial.c
+ * Author: Eric Anson
+ * Purpose: Reads in a sequence of non-negative integers and, for each such
+ *      value read in, prints out whether or not it is equal to a factorial.
+ */
+#include <stdio.h>
+
+/*
+ * whatFact takes an int n. If n = k!, it returns k, otherwise it returns 0
+ */
+int whatFact(int n) {
+  int i, f;
+  i = f = 1;
+
+  while (f < n) {
+    f *= ++i;
+  }
+
+  if (f == n)
+    return i;
+  else
+    return 0;
+}
+
+/*
+ * main() -- Reads in the input and for each integer calls isFactorial.
+ */
+
+int main() {
+  int n, status;
+  int k, error;
+  error = 0;
+
+  while ((status = scanf("%d", &n)) != EOF) {
+    if (status == 0) {
+      fprintf(stderr, "Error: input is not a number\n");
+      return 1;
+    }
+    if (n <= 0) {
+      fprintf(stderr, "Error: input value %d is not positive\n", n);
+      error = 1;
+      continue;
+    }
+
+    if ((k = whatFact(n))) {
+      printf("%d = %d!\n", n, k);
+    }
+    else {
+      printf("%d not factorial\n", n);
+    }
+  }
+
+  return error;
+}

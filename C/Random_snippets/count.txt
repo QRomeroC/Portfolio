@@ -1,0 +1,132 @@
+/*
+ *File: count.c
+ *Author: Cesar D. Quihuis-Romero
+ *Purpose: count.c under normal operations reads a single positve integer (N)  followed by any number of whitespace or new
+ *lines, with N number of integers that follow. Count will then return the number of times each unique integer was seen in
+ *the input stream. This occures after all integers are read. If less then N integers are read, program will continue to
+ *read from io until the Nth integer ir read in, at which point it will output. If more then N integers are in stream, only
+ *N integers will be evaluated. Uses mallac with (N * sizeof(int)) as size.
+ *Error(s): N is not positve - fatal error msg is output to stderr return (1).
+ */
+
+#include <stdlib.h>
+#include <stdio.h>
+
+
+int findUniques(int*,int*,int*,int,int);
+void bubbleSort(int*,int*,int);
+void swap(int*,int*);
+
+int main(void){
+        int N,i,j,uniqueCount;
+        int ret;
+
+        N = i = j = uniqueCount = 0;
+        ret = scanf("%d",&N);
+
+        if (ret <= 0){
+                fprintf(stderr, "Bad input or no input.\n");
+                return 1;
+        }
+
+        if (N < 0){
+                fprintf(stderr, "N is not positive.\n");
+                return 1;
+        }
+
+        int *intArray = malloc(N * sizeof(int));
+
+        if (intArray == NULL){
+                fprintf(stderr,"Memory allocation failure.\n");
+                return 1;
+        }
+
+        while(i < N) {
+
+                ret = scanf("%d", &intArray[i]);
+                if (ret > 0) {
+                        i++;
+                }
+                else {
+                        fprintf(stderr, "input was not %d integers.\n", N);
+                        return 1;
+                }
+        }
+
+        int *uniqueInts = malloc(N * sizeof(int));
+        int *counts = malloc(N * sizeof(int));
+
+        if (uniqueInts == NULL || counts == NULL){
+                fprintf(stderr, "Memory allocation failure.\n");
+                return 1;
+        }
+
+        uniqueCount = findUniques(intArray, uniqueInts, counts, uniqueCount, N);
+
+        bubbleSort(uniqueInts, counts, uniqueCount);
+
+        for (i = 0; i < uniqueCount; i++){
+                printf("%d %d\n", uniqueInts[i], counts[i]);
+        }
+
+        free(intArray);
+        free(uniqueInts);
+        free(counts);
+
+        return 0;
+}
+/*
+ *findUniques(int*,int*,int*,int,int): takes 3 arrays, intArray,uniqueInts, and counts
+ *it assingns uniqueInts[uniqueCount] each new integer found in intArray and incraments
+ *assigns counts[uniqueCount] to 1. If any element in intArray is found in uniqueInts
+ *it incraments the counts but does not assign any value to uniqueInts.
+ *return: int uniqueCount: the number of unique integers found in intArray.
+ */
+int findUniques(int *intArray,int *uniqueInts,int *counts,int uniqueCount,int N){
+        int i,j;
+        for(i = 0; i < N; i++){
+                int found = 0;
+
+                for (j = 0; j < uniqueCount; j++){
+                        if(intArray[i] == uniqueInts[j]){
+                                counts[j]++;
+                                found = 1;
+                                break;
+                        }
+                }
+
+                if (found == 0){
+                        uniqueInts[uniqueCount] = intArray[i];
+                        counts[uniqueCount] = 1;
+                        uniqueCount++;
+                }
+        }
+
+        return uniqueCount;
+
+}
+/*
+ * bubbleSort(int*,int*,int): uses standard bubble sort logic to sort uniqueInts and counts
+ *return: void - just updates uniqueInts and counts at the same time to keep relative values
+ */
+void bubbleSort(int *uniqueInts, int *counts, int uniqueCount){
+        int i,j;
+        for (i = 0; i < uniqueCount - 1; i++){
+                for (j = 0; j < uniqueCount - i - 1; j++){
+                        if (uniqueInts[j] > uniqueInts[j + 1]){
+                                        swap(&uniqueInts[j], &uniqueInts[j + 1]);
+                                        swap(&counts[j], &counts[j + 1]);
+                        }
+                }
+        }
+}
+
+/*
+ *swap(int*,int*)-utilizes standard triangle assignment to reassign values without lossing
+ *a value at a. Uses pointers since we are reassigning the values at the addresses passed.
+ */
+void swap(int *a, int *b){
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+}

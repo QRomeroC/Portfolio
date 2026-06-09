@@ -1,0 +1,145 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
+// Struct declaration
+typedef struct strNode {
+    char *word;
+    struct strNode *groupNext;
+} strNode;
+
+typedef struct countNode {
+    int count[26];
+    struct countNode *nextCount;
+    strNode *strHd, *strTail;
+} countNode;
+
+// Prototypes
+void initCountArray();
+void updateCountArray(char*);
+void updateCountNode(countNode*);
+int checkCounts(countNode*);
+void printList();
+
+// Globals
+char currWord[65];
+int countArray[26];
+countNode *countHd, *countTail;
+
+int main(void) {
+    int scanVal;
+
+    scanVal = scanf("%64s", currWord);
+
+    strNode *newStr = calloc(1, sizeof(strNode));
+    if (newStr == NULL) {
+        fprintf(stderr, "Memory Allocation failure.\n");
+        return 1;
+    }
+    newStr->word = strdup(currWord);
+    if (newStr->word == NULL) {
+        fprintf(stderr, "Memory Allocation failure.\n");
+        free(newStr);
+        return 1;
+    }
+
+    countNode *newCount = calloc(1, sizeof(countNode));
+    if (newCount == NULL) {
+        fprintf(stderr, "Memory Allocation failure.\n");
+        free(newStr->word);
+        free(newStr);
+        return 1;
+    }
+
+    initCountArray();
+    updateCountArray(currWord);
+    updateCountNode(newCount);
+
+    newCount->strHd = newCount->strTail = newStr;
+    newCount->nextCount = NULL;
+    countHd = countTail = newCount;
+
+    while ((scanVal = scanf("%64s", currWord)) != EOF) {
+        strNode *newStr = calloc(1, sizeof(strNode));
+        if (newStr == NULL) {
+            fprintf(stderr, "Memory Allocation failure.\n");
+            return 1;
+        }
+        newStr->word = strdup(currWord);
+        if (newStr->word == NULL) {
+            fprintf(stderr, "Memory Allocation failure.\n");
+            free(newStr);
+            return 1;
+        }
+
+        initCountArray();
+        updateCountArray(currWord);
+
+        countNode *currNode = countHd;
+        int found = 0;
+        while (currNode != NULL) {
+            if (checkCounts(currNode)) {
+                currNode->strTail->groupNext = newStr;
+                currNode->strTail = newStr;
+                found = 1;
+                break;
+            }
+            currNode = currNode->nextCount;
+        }
+
+        if (!found) {
+            countNode *newCount = calloc(1, sizeof(countNode));
+            if (newCount == NULL) {
+                fprintf(stderr, "Memory Allocation Failure.\n");
+                free(newStr->word);
+                free(newStr);
+                return 1;
+            }
+            updateCountNode(newCount);
+            newCount->strHd = newCount->strTail = newStr;
+            newCount->nextCount = NULL;
+            countTail->nextCount = newCount;
+            countTail = newCount;
+        }
+    }
+
+    printList();
+
+    return 0;
+}
+
+void initCountArray() {
+    for (int i = 0; i < 26; i++) {
+        countArray[i] = 0;
+    }
+}
+
+void updateCountArray(char *word) {
+    char *currChar = word;
+    while (*currChar != '\0') {
+        if (isalpha(*currChar)) {
+            countArray[tolower(*currChar) - 'a']++;
+        }
+        currChar++;
+    }
+}
+
+void updateCountNode(countNode *node) {
+    for (int i = 0; i < 26; i++) {
+        node->count[i] = countArray[i];
+    }
+}
+
+int checkCounts(countNode *currNode) {
+    for (int i = 0; i < 26; i++) {
+        if (countArray[i] != currNode->count[i]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void printList() {
+    // Implement the function to print the data from countHd list
+}

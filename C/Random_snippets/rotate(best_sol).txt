@@ -1,0 +1,53 @@
+/* File: rotate.c
+ * Author: Eric Anson
+ * Purpose: read and rotate a vector
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+  int sz, i, rot, *vect;
+
+  if (scanf("%d", &sz) < 1) {
+    fprintf(stderr, "Error in inputing vector size\n");
+    return 1;
+  }
+
+  if (sz < 1) {
+    fprintf(stderr, "Vector size is not positive\n");
+    return 1;
+  }
+
+  vect = malloc(sz * sizeof(int));
+  if (vect == NULL) {
+    fprintf(stderr, "Out of memory\n");
+    return 1;
+  }
+
+  for (i=0; i < sz; ++i) {
+    if (scanf("%d", &vect[i]) < 1) {
+      fprintf(stderr, "Error in inputing vector.\n");
+      return 1;
+    }
+  }
+
+  if (scanf("%d", &rot) < 1) {
+    fprintf(stderr, "Error in inputing rotation\n");
+    return 1;
+  }
+
+  rot = rot % sz;
+  if (rot <= 0)
+    rot = -rot;
+  else
+    rot = sz - rot;
+
+  for (i = 0; i < sz; ++i) {
+    printf("%d ", vect[rot]);
+    rot = (rot + 1) % sz;
+  }
+  printf("\n");
+
+  return 0;
+}

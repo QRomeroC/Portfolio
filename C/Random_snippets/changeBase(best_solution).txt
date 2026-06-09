@@ -1,0 +1,85 @@
+/* File: changeBase.c
+ * Author: Eric Anson
+ * Purpose: Read in a integer whose value is between 2 and 36.
+ * that number will be treated as a base. Then a series of strings
+ * will be read in that are up to 6 digit numbers in that base.
+ * These will be converted to a decimal number and that value output.
+ */
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+char bnd;       //bnd the highest char allowed in the number
+
+/* convertNum (char *num, int b)
+ * takes a string that represents a number in base b. If the string is
+ * a legal b-base number, it prints its value in base-10, and returns 0.
+ * Otherwise it prints nothing and returns 1.
+ */
+int convertNum (char *num, int b) {
+  unsigned long int num10;
+  unsigned long int dig, pow;
+  int len, i;
+
+  pow = 1;      //keeps track of the base multiple for each column
+  num10 = 0;    //is the decimal number being calculated
+  len = strlen(num);
+
+  //loop through the number from the least signifcant digit
+  //to the most significant digit. Each time pow is multiplied by the base
+  for (i = len-1; i >= 0; --i) {
+    if (!isalnum(num[i]) || toupper(num[i]) >= bnd) { //check if char valid
+      fprintf(stderr,"Not a %d base number\n",b);
+      return 1;
+    }
+    //now get the value of the 'digit'. '0'-'9' must be treated diff
+    //from 'A' to 'Z'
+    if (num[i] <= '9')
+      dig = num[i] - '0';
+    else
+      dig = toupper(num[i]) - 'A' + 10;
+    num10 += pow * dig;
+    pow *= b;
+  }
+  printf("%lu\n",num10);
+  return 0;
+}
+
+/* main - the driver function. It first reads in and verifies the base
+ * and reads the numbers in an array, and calls a function to process and
+ * print them.
+ */
+int main () {
+  int b, errStat;
+  char str[7];
+
+  errStat = 0;  //no errors yet
+
+  //read in the base
+  if (scanf("%d", &b) < 1) {
+    fprintf(stderr, "Bad base input\n");
+    return 1;
+  }
+
+  if (b < 2 || b > 36) {                //base must be between 2 and 36
+    fprintf(stderr, "Bad value for base.\n");
+    return 1;
+  }
+
+  //calculate largest 'digit' allowed for this base
+  if (b < 11)
+    bnd = '0' + b;
+  else
+    bnd = 'A' + b - 10;         //We will convert to uppercase
+
+  //read in base b numbers
+  while (scanf("%6s", str) != EOF) {
+    errStat += convertNum(str, b);
+  }
+
+  if (errStat > 0)
+    return 1;
+  else
+    return 0;
+}

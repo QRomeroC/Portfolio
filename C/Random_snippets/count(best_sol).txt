@@ -1,0 +1,67 @@
+/* File: count.c
+ * Author: Eric Anson
+ * Purpose: read integers and give a count of their frequencies
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//sortInts(nums, sz) sorts nums, and array of sz ints using a simple
+//insertion sort
+void sortInts(int *nums, int sz) {
+  int i, j, temp;
+
+  for (i = 1; i < sz; ++i) {
+    for (j = i-1; j >= 0 && nums[j] > nums[j+1]; --j) {
+      temp = nums[j];
+      nums[j] = nums[j+1];
+      nums[j+1] = temp;
+    }
+  }
+}
+
+
+int main() {
+  int i, size, *nums;
+  int currNum, cnt;
+
+  if (scanf("%d", &size) < 1) {
+    fprintf(stderr, "Bad or no number entered\n");
+    return 1;
+  }
+
+  if (size < 1) {
+    fprintf(stderr, "The size is not a positive number\n");
+    return 1;
+  }
+
+  nums = malloc(size * sizeof(int));
+  if (nums == NULL) {
+    fprintf(stderr, "Out of memory\n");
+    return 1;
+  }
+
+  for (i = 0; i < size; ++i) {
+    if (scanf("%d", &nums[i]) < 1) {
+      fprintf(stderr, "Input was not %d integers\n", size);
+      return 1;
+    }
+  }
+
+  sortInts(nums, size);
+
+  cnt = 1;
+  currNum = nums[0];
+  for (i=1; i < size; ++i) {
+    if (nums[i] == currNum)
+      ++cnt;
+    else {
+      printf("%d %d\n", currNum, cnt);
+      currNum = nums[i];
+      cnt = 1;
+    }
+  }
+  printf("%d %d\n", currNum, cnt);
+
+  return 0;
+}

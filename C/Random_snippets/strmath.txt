@@ -1,0 +1,348 @@
+/*
+ *File: strmath.c
+ *Author: Cesar D. Quihuis-Romero
+ *Purpose: strmath.c reads from stdin three strings. The first string represents the
+ *operation to be performed. The second and third represent sequences of decimal digits.
+ *Output: The result of performing operation on string (2) and string (3).
+ *Error Handling: Fatal Errors:
+ *1)first string not "add" or "sub" (including trailling whitespace
+ *2)second/third string containing trailling whitespace or non-ints
+ *3)not enough inputs/line contains only whitespace
+ */
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+//prototype methods
+char* screenInputs(char*,int);
+char* makeEqualLen(char*,char*,int,int);
+char* add(char*,char*,char*,int);
+char* sub(char*,char*,char*,int);
+char* initRetStr(char*,int);
+//globals
+char *op = NULL;
+char *str1 = NULL;
+char *str2 = NULL;
+char *retStr = NULL;
+char *temp = NULL;
+size_t len = 0;
+int str1Len = 0;
+int str2Len = 0;
+int retStrLen = 0;
+
+int main(void){
+        //retVal to check return value from getlines; opCode (1) for add (0) for sub.
+        int retVal,opCode;
+        retVal = opCode = -1;
+        //get op and error handle
+        retVal = getline(&op, &len, stdin);
+        if (retVal == -1){
+                fprintf(stderr,"No input.\n");
+                return 1;
+        }
+        if (op == NULL){
+                fprintf(stderr, "Memory allocation failure.\n");
+                return 1;
+        }
+        //Set op code or error out screening bad op string
+        if (strcmp(op,"add\n") == 0) {
+                opCode = 1;
+        }
+        else if (strcmp(op,"sub\n") == 0){
+                opCode = 0;
+        }
+        else {
+                fprintf(stderr,"Input was not add or sub.\n");
+                return 1;
+        }
+        //get str1 and error handle
+        retVal = getline(&str1, &len, stdin);
+        if (str1 == NULL){
+                fprintf(stderr, "Memory allocation failure.\n");
+                return 1;
+        }
+        if (retVal == -1){
+                fprintf(stderr, "No input.\n");
+                return 1;
+        }
+        //get inital length with leading zeros if present.
+        str1Len = strlen(str1);
+        //truncate leading zeros and screen invalid chars
+        str1 = screenInputs(str1,str1Len);
+        if(str1 == NULL){
+                fprintf(stderr,"input contained an invalid character.\n");
+                return 1;
+        }
+        //update length after screening
+        str1Len = strlen(str1);
+        //get str2 and error handle
+        retVal = getline(&str2, &len, stdin);
+        if (str2 == NULL){
+                fprintf(stderr, "Memory allocaiton failure.\n");
+                return 1;
+        }
+        if (retVal == -1){
+                fprintf(stderr, "No input.\n");
+                return 1;
+        }
+        //get initial length with leading zeros
+        str2Len = strlen(str2);
+        //truncate leading zeros and screen invalid chars
+        str2 = screenInputs(str2,str2Len);
+        if(str2 == NULL){
+                fprintf(stderr,"input contained an invalid character.\n");
+                return 1;
+        }
+        //update length after screening
+        str2Len = strlen(str2);
+        //if length of str1 > str2 make a new array equal in len, padding with zeros.
+        if (str1Len > str2Len){
+                //temp is new array of larger size
+                temp = malloc((str1Len + 1) * sizeof(char));
+                if (temp == NULL){
+                        fprintf(stderr, "Memory allocation failure.\n");
+                        return 1;
+                }
+                //temp becomes a copy of smaller array with padded zeros
+                temp = makeEqualLen(temp, str2,str1Len,str2Len);
+                //reassign str2 to new array with padded zeros. array lengths are now equal
+                str2 = temp;
+                //update length of str2 with new length including zeros to equal str1 length
+                str2Len = strlen(str2);
+        }
+        //same logic as above just reverse if str2Len > str1Len
+        else if (str2Len > str1Len){
+                temp = malloc((str2Len + 1) * sizeof(char));
+                if (temp == NULL){
+                        fprintf(stderr, "Memory allocation failure.\n");
+                        return 1;
+                }
+                temp = makeEqualLen(temp, str1, str2Len,str1Len);
+                str1 = temp;
+                str1Len = strlen(str1);
+        }
+        retStr = malloc((str1Len + 1) * sizeof(char));
+        if (retStr == NULL){
+                fprintf(stderr,"Memory allocation failure.\n");
+                return 1;
+        }
+        //init returns a pointer for return string.
+        retStr = initRetStr(retStr,str1Len);
+        //get length of retStr. initRetStr initialized all values to '0'
+        retStrLen = strlen(retStr);
+        //add vs sub
+        if (opCode == 1){
+                retStr = add(str1, str2,retStr,retStrLen);
+                retStr = screenInputs(retStr,retStrLen);
+        }
+        else{
+                retStr = sub(str1,str2,retStr,retStrLen);
+                //I don't rescreen since retStr might have a leading '-' after sub
+                //Sub handles truncating padded zeros
+         }
+
+        printf("%s\n", retStr);
+
+        return 0;
+
+}
+/*
+ *screenInputs(char*,int): takes a pointer to an string and the length of the string.
+ *It updates the str pointer to the first non-zero char (if present) and screeens
+ *for invalid chars (char<'0' || char>'9' non digit).
+ *Return: NULL if invalid charcter found else returns a pointer to the new string if trucated.
+ */
+char* screenInputs(char *str, int strLen){
+        char *strEnd,*currChar;
+        strEnd = str + strLen - 1;
+
+        while (*str == '0' && str < strEnd){
+                str++;
+        }
+
+        currChar = str;
+
+        while (currChar < strEnd){
+                if (*currChar < '0' || *currChar > '9'){
+                        return NULL;
+                }
+                currChar++;
+        }
+
+        return str;
+}
+
+/*
+ *makeEqualLen(char*,char*,int): takes as aruments two pointers to string, one empty
+ *one from readlines, the empty temp string will be filled with zeros, then have
+ *the contents of other stirng copied into it.
+ *Return: pointer to temp array for reassignment.
+ */
+char* makeEqualLen(char *temp, char *str, int maxLen, int minLen){
+        int i;
+        char *tempEnd,*strEnd;
+
+        for (i = 0; i < maxLen; i++){
+                temp[i] = '0';
+        }
+
+        tempEnd = temp + maxLen - 1;
+        strEnd = str + minLen - 1;
+
+        while (str <= strEnd){
+                *tempEnd = *strEnd;
+                tempEnd--;
+                strEnd--;
+        }
+        return temp;
+}
+
+/*
+ *add(char*,char*,int,int,char*,int): takes three pointers to strings, sets a pointer
+ *to the end of all three stirngs and gets the value at end for str1 and str2, adds
+ *them (handling carry) and stores in retStrEnd, moves from least sig to most sig value.
+ *Return: a pointer to retStr.
+ */
+char* add(char *str1,char *str2,char *retStr,int retStrLen){
+        //carry starts as zero
+        int carry = 0;
+        //init pointer for ends
+        char *str1End, *str2End,*retStrEnd;
+        //value to store result of addition into for assignment into retStr
+        char r;
+        //find the end of all three - off by 2 because of newlines
+        str1End = str1 + strlen(str1) - 2;
+        str2End = str2 + strlen(str2) - 2;
+        retStrEnd = retStr + retStrLen;
+
+        while (str1 <= str1End){
+                //calc from least sig to most sig each char value
+                r = (*str1End - '0') + (*str2End - '0') + carry + '0';
+                //case 1: if r > '9' update carry, reduce r and store, move pointers
+                if (r > '9'){
+                        carry = 1;
+                        r = r - 10;
+                        *retStrEnd = r;
+                        str1End--;
+                        str2End--;
+                        retStrEnd--;
+                }
+                //case 2: no carry
+                else {
+                        carry = 0;
+                        *retStrEnd = r;
+                        str1End--;
+                        str2End--;
+                        retStrEnd--;
+                }
+
+        }
+        //if carry remains after then the most sig value of return string is 1
+        if (carry == 1){
+                *retStrEnd =  '1';
+        }
+        //else its zero, (on return retStr is rescreened for leading zeros).
+        else {
+                *retStrEnd = '0';
+        }
+        return retStr;
+
+}
+
+/*
+ *sub(char*,char*,int,int,char*,int): takes three pointers to strings, get least sig
+ *value and subtracts, if str1 < str2 (strcmp(str1,str2) < 0) reassings pointers so
+ *str1 is always largest of two, will append '-'sign as appropreate. Will look to left
+ *for a barrow value if result of subtraction is < '0'.
+ *Return: retStr - a pointer to the resulting string after subtraction
+ */
+char* sub(char *str1,char *str2,char *retStr,int retStrLen){
+        //*temp for reassignment,
+        //ends for end pointers, bar for pointer to first value to barrow from if needed
+        char *temp,*str1End,*str2End,*retStrEnd,*bar;
+        //char for result of subtraction and value of barrow after we barrow from it
+        char r,b;
+        //tempInt for reassignment
+        int tempInt;
+        //see if str1 is smaller then str2
+        int retVal = strcmp(str1,str2);
+        //if so reassign so str1 is always larger
+        if (retVal < 0){
+                temp = str1;
+                str1 = str2;
+                str2 = temp;
+                tempInt = str1Len;
+                str1Len = str2Len;
+                str2Len = tempInt;
+        }
+        //get ends - off by 2 because of newlines
+        str1End = str1 + strlen(str1) - 2;
+        str2End = str2 + strlen(str2) - 2;
+        retStrEnd = retStr + retStrLen;
+
+        while (str1 <= str1End){
+                //initalize bar to point one left of curr value
+                bar = str1End - 1;
+                //calc result of subtraction
+                r = (*str1End - '0') - (*str2End - '0') + '0';
+                //check if need to barrow
+                if (r < '0'){
+                        //check if value at bar is large enough to barrow
+                        while(*bar < '1'){
+                                //if curr value at bar is '0' replace with 9
+                                //this accounts for the barrow trickling from MSD to LSD
+                                *bar = '9';
+                                //dec bar until value of '1' or greater is found.
+                                bar--;
+                        }
+                        //assign b value of one less then bar
+                        b = *bar - 1;
+                        //store updated value at bar
+                        *bar = b;
+                        //add 10 to value at str1End after barrow was found.
+                        r = ((*str1End+10)-'0')-(*str2End-'0')+'0';
+                        //store result
+                        *retStrEnd = r;
+                        //move pointers
+                        str1End--;
+                        str2End--;
+                        retStrEnd--;
+                }
+                //result did not require a barrow
+                else {
+                        //store and move
+                        *retStrEnd = r;
+                        str1End--;
+                        str2End--;
+                        retStrEnd--;
+                }
+        }
+        //update retStr to move passed padded zeros
+        while (*retStr == '0'){
+                retStr++;
+        }
+        //if str1 was initially smaller then result is negated
+        if (retVal < 0){
+                //move pointer back one to a open zero
+                retStr--;
+                //assign the negative sign
+                *retStr = '-';
+        }
+
+        return retStr;
+
+}
+
+/*
+ *initRetStr(char*,int): initailizes a new pointer to a string using malloc,and fills with zeros
+ *Return: retStr - a pointe to the string to be used to store the return value.
+ */
+char* initRetStr(char *retStr, int strLen){
+        int i;
+        for (i = 0; i < strLen; i++){
+                retStr[i] = '0';
+        }
+        return retStr;
+}

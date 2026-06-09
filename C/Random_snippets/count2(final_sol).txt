@@ -1,0 +1,133 @@
+/*
+ *File: count2.c
+ *Author: Cesar D. Quihuis-Romero
+ *Purpose: count2 reads in a sequence of ints
+ *and counts the number of times each int
+ *appears.
+ *Error(s): Non-int in input stream: Fatal error
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+//struct declaration
+typedef struct Node{
+        int val,count;
+        struct Node *next,*prev;
+} Node;
+//globals
+int currVal,retVal;
+Node *hd,*tail,*currNode;
+//prototypes
+void printList();
+
+int main(void){
+        //new node sizeof struct node - space for two ints and two pointers
+        Node *newNode = malloc(sizeof(Node));
+        //check if malloc failed
+        if (newNode == NULL){
+                fprintf(stderr,"Memory Allocation Failure\n");
+                return 1;
+        }
+        //update hd and tail
+        hd = tail = newNode;
+        //get first value from io stream
+        retVal = scanf("%d",&currVal);
+        //check if retval got a good value or error out
+        if (retVal > 0){
+                hd->val = currVal;
+                hd->count=1;
+                hd->next=NULL;
+                hd->prev=NULL;
+        }
+        else if (retVal == 0){
+                fprintf(stderr,"Invalid input.\n");
+                return 1;
+        }
+        else {
+                return 0;
+        }
+        //set currNode to null - used to traverse list
+        currNode = NULL;
+        //while io stream is valid and not EOF
+        while((retVal = scanf("%d",&currVal)) != EOF){
+                //screen bad inputs
+                if(retVal == 0){
+                        fprintf(stderr,"Input contained a non-integer character.\n");
+                        return 1;
+                }
+
+                //start at hd
+                currNode = hd;
+                //while we are not at end
+                while(currNode != NULL){
+                        //check if new value is equal to one in list
+                        if (currNode->val == currVal){
+                                currNode->count = currNode->count + 1;
+                                break;
+                        }
+                        //else move trough list
+                        currNode = currNode->next;
+
+                }
+                //if no node had equal value then make new node
+                Node *newNode = malloc(sizeof(Node));
+                //check if malloc failed
+                if (newNode == NULL){
+                        fprintf(stderr,"Memory Allocation Failure.\n");
+                        return 1;
+                }
+
+                newNode->val=currVal;
+                newNode->count = 1;
+                newNode->next = NULL;
+                newNode->prev = NULL;
+                //if currNode is null we traversed the whole list
+                if(currNode == NULL){
+                        //start back at hd
+                        currNode = hd;
+                        //check if need new hd
+                        if(currVal < hd->val){
+                                newNode->next = hd;
+                                hd->prev = newNode;
+                                hd = newNode;
+                        }
+                        //check if we need new tail
+                        else if(currVal > tail->val){
+                                newNode->prev = tail;
+                                tail->next = newNode;
+                                tail = newNode;
+                        }
+                        //or find the first larger value and place node left
+                        else{
+                                while (currNode->val < currVal){
+                                        currNode = currNode->next;
+                                }
+                                newNode->next = currNode;
+                                currNode->prev->next = newNode;
+                                newNode->prev = currNode->prev;
+                                currNode->prev = newNode;
+                        }
+                }
+        }
+
+        if (hd != NULL){
+                //call print
+                printList();
+        }
+        //std return
+        return 0;
+
+}
+/*
+ *printList() takes no arguements, uses global var currNode sets to head and
+ *traverses list printing each val and count.
+ */
+void printList(){
+        currNode = hd;
+        while(currNode != NULL){
+                printf("%d %d\n",currNode->val, currNode->count);
+                currNode = currNode->next;
+        }
+}

@@ -1,0 +1,26 @@
+int findPrime();
+bool isPrime();
+int ret,num;
+int main( void ){
+        while (scanf("%d", &num) == 1){
+                ret = scanf("%d", &num);
+                while (ret == 1) {
+                        if (num < 0){
+                                fprintf(stderr, "negiative numbers not accepted\n");
+                                return 1;
+                        }
+                        else {
+                                findPrime(num);
+                        }
+                        ret = scanf("%d", &num);
+                }
+        }
+
+        if (ret != EOF){
+                fprintf(stderr, "value was not an integer\n");
+                return 1;
+        }
+        else {
+                return 0;
+        }
+}

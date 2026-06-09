@@ -1,0 +1,167 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+// Function prototypes
+char* screenInputs(char*, int);
+char* makeEqualLen(char*, char*, int, int);
+char* add(char*, char*, char*, int);
+char* sub(char*, char*, char*, int);
+char* initRetStr(char*, int);
+
+// Global variables
+char *op = NULL;
+char *str1 = NULL;
+char *str2 = NULL;
+char *retStr = NULL;
+char *temp = NULL;
+size_t len = 0;
+int str1Len = 0;
+int str2Len = 0;
+int retStrLen = 0;
+
+int main(void) {
+    // Return value to check from getline; opCode (1) for add, (0) for sub.
+    int retVal, opCode;
+    retVal = opCode = -1;
+
+    // Get the operation and error handle
+    retVal = getline(&op, &len, stdin);
+    if (retVal == -1) {
+        fprintf(stderr, "No input.\n");
+        return 1;
+    }
+    if (op == NULL) {
+        fprintf(stderr, "Memory allocation failure.\n");
+        return 1;
+    }
+    // Set op code or error out screening bad op string
+    if (strcmp(op, "add\n") == 0) {
+        opCode = 1;
+    } else if (strcmp(op, "sub\n") == 0) {
+        opCode = 0;
+    } else {
+        fprintf(stderr, "Input was not add or sub.\n");
+        return 1;
+    }
+
+    // Get str1 and error handle
+    retVal = getline(&str1, &len, stdin);
+    if (retVal == -1) {
+        fprintf(stderr, "No input.\n");
+        return 1;
+    }
+    if (str1 == NULL) {
+        fprintf(stderr, "Memory allocation failure.\n");
+        return 1;
+    }
+    str1[retVal - 1] = '\0';  // Properly null-terminate the string (remove newline)
+    str1Len = strlen(str1);
+
+    // Truncate leading zeros and screen invalid characters
+    str1 = screenInputs(str1, str1Len);
+    if (str1 == NULL) {
+        fprintf(stderr, "Input contained an invalid character.\n");
+        return 1;
+    }
+    str1Len = strlen(str1);
+
+    // Get str2 and error handle
+    retVal = getline(&str2, &len, stdin);
+    if (retVal == -1) {
+        fprintf(stderr, "No input.\n");
+        return 1;
+    }
+    if (str2 == NULL) {
+        fprintf(stderr, "Memory allocation failure.\n");
+        return 1;
+    }
+    str2[retVal - 1] = '\0';  // Properly null-terminate the string (remove newline)
+    str2Len = strlen(str2);
+
+    // Truncate leading zeros and screen invalid characters
+    str2 = screenInputs(str2, str2Len);
+    if (str2 == NULL) {
+        fprintf(stderr, "Input contained an invalid character.\n");
+        return 1;
+    }
+    str2Len = strlen(str2);
+
+    // Make strings equal length by padding with zeros
+    if (str1Len > str2Len) {
+        temp = malloc((str1Len + 1) * sizeof(char));
+        if (temp == NULL) {
+            fprintf(stderr, "Memory allocation failure.\n");
+            return 1;
+        }
+        temp = makeEqualLen(temp, str2, str1Len, str2Len);
+        str2 = temp;
+        str2Len = strlen(str2);
+    } else if (str2Len > str1Len) {
+        temp = malloc((str2Len + 1) * sizeof(char));
+        if (temp == NULL) {
+            fprintf(stderr, "Memory allocation failure.\n");
+            return 1;
+        }
+        temp = makeEqualLen(temp, str1, str2Len, str1Len);
+        str1 = temp;
+        str1Len = strlen(str1);
+    }
+
+    retStr = malloc((str1Len + 2) * sizeof(char));  // +2 for carry and null terminator
+    if (retStr == NULL) {
+        fprintf(stderr, "Memory allocation failure.\n");
+        return 1;
+    }
+
+    // Initialize return string
+    retStr = initRetStr(retStr, str1Len + 1);
+    retStrLen = strlen(retStr);
+
+    // Add or subtract
+    if (opCode == 1) {
+        retStr = add(str1, str2, retStr, retStrLen);
+        retStr = screenInputs(retStr, retStrLen);
+    } else {
+        retStr = sub(str1, str2, retStr, retStrLen);
+    }
+
+    printf("%s\n", retStr);
+
+    // Free allocated memory
+    free(op);
+    free(str1);
+    free(str2);
+    free(retStr);
+
+    return 0;
+}
+
+char* screenInputs(char *str, int strLen) {
+    while (*str == '0' && *(str + 1) != '\0') {
+        str++;
+    }
+    for (int i = 0; i < strLen; i++) {
+        if (str[i] < '0' || str[i] > '9') {
+            return NULL;
+        }
+    }
+    return str;
+}
+
+char* makeEqualLen(char *temp, char *str, int maxLen, int minLen) {
+    int i;
+    memset(temp, '0', maxLen);
+    temp[maxLen] = '\0';  // Properly terminate with null character
+    for (i = minLen - 1; i >= 0; i--) {
+        temp[--maxLen] = str[i];
+    }
+    return temp;
+}
+
+char* initRetStr(char *retStr, int strLen) {
+    memset(retStr, '0', strLen);
+    retStr[strLen] = '\0';  // Properly terminate with null character
+    return retStr;
+}

@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int ret,num,errorSeen;
+
+int main(void){
+	errorSeen = 0;
+	while ((ret = scanf("%d", &num)) == 1){
+		if (num < 0){
+			fprintf(stderr, "Error: input value %d is not positive\n", num);
+			errorSeen =  1;
+		}
+		else {
+			isFactoral(num);
+		}
+	}
+	
+	if (ret == EOF){
+		return errorSeen;
+	}
+	else {
+		fprintf(stderr, "Error: input is not a number\n");
+		return 1;
+	}
+}

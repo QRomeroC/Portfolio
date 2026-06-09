@@ -1,0 +1,19 @@
+int main(void) {
+    int ret;
+
+    while ((ret = scanf("%d", &num)) == 1) {
+        if (num < 0) {
+            fprintf(stderr, ["insert error msg here"]);
+            return 1;
+        } else {
+            [function_on_input_ here](num);
+        }
+    }
+
+    if (ret == EOF) {
+        return 0; // Normal end of input
+    } else {
+        fprintf(stderr, "Value was not an integer\n");
+        return 1; // Error for non-integer input
+    }
+}

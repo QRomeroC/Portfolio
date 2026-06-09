@@ -1,0 +1,105 @@
+/*
+ *File: count2.c
+ *Author: Cesar D. Quihuis-Romero
+ *Purpose: count2 reads in a sequence of ints
+ *and counts the number of times each int
+ *appears.
+ *Error(s): Non-int in input stream: Fatal error
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+typedef struct Node{
+        int val,count;
+        struct Node *next,*prev;
+} Node;
+
+int currVal,retVal;
+Node *hd,*tail,*temp;
+
+int main(void){
+        Node *newNode = malloc(sizeof(Node));
+
+        if (newNode == NULL){
+                fprintf(stderr,"Memory Allocation Failure\n");
+                return 1;
+        }
+
+        hd = newNode;
+        tail = hd;
+
+        retVal = scanf("%d",&currVal);
+
+        if (retVal > 0){
+                hd->val = currVal;
+                hd->count=1;
+                hd->next=NULL;
+                hd->prev=NULL;
+        }
+        else{
+                fprintf(stderr,"Invalid input.\n");
+        }
+
+        Node *currNode=NULL;
+
+        while((retVal = scanf("%d",&currVal)) != EOF){
+                if(retVal < 1){
+                        fprintf(stderr,"Input contained a non-integer character.\n");
+                        return 1;
+                }
+                currNode=hd;
+                while(currNode != NULL){
+                        if (currNode->val == currVal){
+                                currNode->count = currNode->count + 1;
+                                break;
+                        }
+
+                        currNode = currNode->next;
+
+                }
+
+                Node *newNode = malloc(sizeof(Node));
+                if (newNode==NULL){
+                        fprintf(stderr,"Memory Allocation Failure.\n");
+                        return 1;
+                }
+                if(currNode == NULL){
+                        currNode = hd;
+                        if(currVal < hd->val){
+                                newNode->val = currVal;
+                                newNode->count=1;
+                                newNode->prev = NULL;
+                                newNode->next = hd;
+                                hd->prev = newNode;
+                                hd=newNode;
+                        }
+                        else if(currVal > tail->val){
+                                newNode->val=currVal;
+                                newNode->count=1;
+                                newNode->prev=tail;
+                                tail->next=newNode;
+                                tail=newNode;
+                        }
+                        else{
+                                while (currNode->val < currVal){
+                                        currNode = currNode->next;
+                                }
+                                newNode->val=currVal;
+                                newNode->count=1;
+                                newNode->next=currNode;
+                                newNode->prev=currNode->prev;
+                                currNode->prev=newNode;
+                        }
+                }
+        }
+
+        currNode = hd;
+        while(currNode != NULL){
+                printf("%d: %d\n",currNode->val,currNode->count);
+                currNode = currNode->next;
+        }
+        return 0;
+
+}

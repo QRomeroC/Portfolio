@@ -1,0 +1,79 @@
+/*
+ *File: rotate.c
+ *Author: Cesar D. Quihuis-Romero
+ *Purpose: rotate.c reads from input (stdio) a integer N, that represents the
+ *number of integers in given vector, it then reads N number of integers,
+ *followed by an integer that represents the number of times to rotate the
+ *elements in the given vector. rotate.c writes to display the rotated vector
+ *but does not modify the original vector.
+ *Error(s): fatal errors:
+ *          1)the first element is negative or not an integer
+ *          2)the elements that follow the first integer contain a non-int
+ *          3)the elements that follow are less the N number of ints and EOF
+ *          is incountered
+ *          4)the integer to rotate by is not an integer
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void printRotate(int*, int, int);
+
+int main(void){
+
+        int N,i,rot,ret;
+
+        N = i = 0;
+
+        scanf("%d", &N);
+
+        if (N < 0){
+                fprintf(stderr, "N is not positive.\n");
+                return 1;
+        }
+
+        int *intArray = malloc(N * sizeof(int));
+
+        if (intArray == NULL){
+                fprintf(stderr, "Memory allocation failure.\n");
+                return 1;
+        }
+
+        while (i < N){
+
+                ret = scanf("%d", &intArray[i]);
+
+                if (ret > 0){
+                        i++;
+                }
+                else {
+                        fprintf(stderr, "input was not %d integers.\n", N);
+                        return 1;
+                }
+
+        }
+
+        ret = scanf("%d",&rot);
+
+        if (ret < 1){
+                fprintf(stderr,"Invalid value to rotate.\n");
+                return 1;
+        }
+
+        rot = ((rot % N) + N) % N;
+
+        printRotate(intArray, rot, N);
+
+        free(intArray);
+
+        return 0;
+}
+
+void printRotate(int *intArray, int rot, int N){
+        int i;
+        for (i = 0; i < N; i++){
+                int index = (((i - rot) % N) + N) % N;
+                printf("%d ", intArray[index]);
+        }
+        printf("\n");
+}

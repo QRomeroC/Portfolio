@@ -1,0 +1,99 @@
+/*
+ *File: sumLine.c
+ *Author: Cesar D. Quihuis-Romero
+ *Purpose: sumLine.c reads from input (stdin) a
+ *sequence of lines, each consisting of a
+ *non-empty sequence of non-negative decimal
+ *integers, with adjacent numbers separated by
+ *whitespace.
+ *Error(s): Non-positve integer - non fatal
+ *          non-integer - non fatal
+ *          All whitespace - non fatal
+ *Both will write an error message to stderr andskip the
+ *bad line and keep reading from input until EOF.
+ */
+
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+//prototype
+int screenInput(char*);
+void sumOf(char*);
+//globals
+char *str = NULL;
+size_t len = 0;
+long sum = 0;
+
+int main(void){
+        int retVal,input;
+        int errSeen = 0;
+        //get input read in from getline
+        while((retVal = getline(&str,&len,stdin)) > 0){
+                //call to screenInputs
+                input = screenInput(str);
+                //screen for invalid chars or empty lines
+                if(input == -1){
+                        fprintf(stderr,"Bad Input.\n");
+                        errSeen = 1;
+                        continue;
+                }
+                else if (input == 0){
+                        fprintf(stderr,"Empty Line.\n");
+                        errSeen = 1;
+                        continue;
+                }
+                //sum and print
+                else {
+                        sumOf(str);
+                        printf("%ld\n",sum);
+                        sum = 0;
+                }
+        }
+        return errSeen;
+}
+
+/*
+ *screenInput(char*) - takes in a character pointer to the start of the string
+ *read in from getlines. Iterates through the string looking for non digit
+ *or non whitespace (whitespace includes spaces, tabs, newlines,
+ *null terminators, carage return and others).
+ *Return: digitSeen: an integer representing if at least one integer was seen.
+ *        (1) - if a digit was found in string.
+ *        (0) - if string was all whitespace and no digit was seen.
+ *        (-1) - immediate return if invalid character was encountered.
+ */
+int screenInput(char *str){
+        int digitSeen = 0;
+        while (*str != '\n' && *str != '\0'){
+                if (!isdigit(*str) && !isspace(*str)){
+                        return -1;
+                }
+                if (isdigit(*str)){
+                        digitSeen = 1;
+                }
+                str++;
+        }
+        return digitSeen;
+}
+
+/*
+ *sumOf(char*) - takes in a character pointer to a string and utilizes
+ *sscanf with two addresses, temp is the integer seen, offset is the total
+ *character encountered, offset is added to str to push pointer past int.
+ *while sscanf is returning a value > (0) then it is reading characters
+ *if it return (0), since invaild chars are screen out prior, then we hit
+ *trailing whitespace and we can fall out and return to caller.
+ *Return: void - sum is a global variable that is incramented by temp and
+ *reset to (0) after value of sum is writen to display.
+ */
+void sumOf(char *str){
+        int retVal;
+        int offset = 0;
+        long temp = 0;
+
+        while((retVal = sscanf(str,"%ld%n",&temp,&offset)) > 0){
+                sum += temp;
+                str += offset;
+        }
+}
