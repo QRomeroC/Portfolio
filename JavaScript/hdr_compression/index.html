@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>A06 Template</title>
+  </head>
+	<style>
+		.part {border-style: double;}
+	</style>
+  <body>
+ <h1 align="center">Homework 6</h1>
+	
+  <div class="part">
+  <h2 align="center">Part 1</h2>
+  <input type="file" id="load_image">
+  </div> 
+  
+  <div class="part">
+  <h2 align="center">Part 2</h2>
+  <div>
+    <a href="" id="save_image">Click to Save Part 2 result</a>
+  </div>
+  <p align="center">
+        <canvas id="canvas" width="1" height="1"></canvas>
+  </p>
+  <p align="center">
+  <input type="range" id="gammaVolume" name="gammaVolume"
+         value="0.4" min="0.1" max="3.0" step="0.01">
+  <p align="center">Gamma: <span id="gammaValueText"></span></p>
+  </p>
+  </div> 
+  <div class="part">
+  <h2 align="center">Part 3</h2>
+  <div>
+    <a href="" id="save_imageP3">Click to Save Part 3 result</a>
+  </div>
+  <p align="center">
+        <canvas id="canvasP3" width="1" height="1"></canvas>
+  </p>
+  <p align="center">
+  <input type="range" id="gammaVolumeP3" name="gammaVolumeP3"
+         value="-3.2" min="-5.0" max="5.0" step="0.01">
+		 <p align="center">Gamma: <span id="gammaValueTextP3"></span></p>
+  </p>
+  </div> 
+
+  <script type="text/javascript" src="a06.js"></script>
+  <script type="text/javascript" src="FileSaver.js"></script>
+  <script type="text/javascript" src="hdr.js"></script>
+	
+
+  </body>
+</html>
