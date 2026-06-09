@@ -1,0 +1,17 @@
+
+public class testCase1 {
+	private static ArrList act = new ArrList();
+	
+    public static void main(String[] args) {
+    	System.out.println(act.isEmpty());
+    	
+    	act.addFirst(1);
+    	System.out.println(act.isEmpty());
+    	System.out.println(act.toString());
+   	
+    	
+    	
+
+    }
+	
+}

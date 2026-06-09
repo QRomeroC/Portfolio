@@ -1,0 +1,18 @@
+
+public class abs {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int absolute = abs(-1);
+		System.out.println(absolute);
+		int test = abs('a');
+		System.out.println(test);
+	}
+
+	public static int abs(int n) {
+		// TODO Auto-generated method stub
+		if (n >= 0) return n;
+		return -1*n;
+	}
+
+}

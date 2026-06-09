@@ -1,0 +1,120 @@
+import java.util.ArrayList;
+
+/**
+ * Author: Cesar D. Quihuis-Romero 
+ * Purpose: this class, in concert with other
+ * associated classes, will utilize a deque data structure to "solve" a word
+ * search puzzle. It will find a series of "paths" (tuples) corresponding to the
+ * (row, col) location of the individual characters making up the word
+ * 
+ * Methods: 
+ * public Puzzle(Grid grid): constructor taking as argument a Grid
+ * object 
+ * public String find(String word, int r, int c): find and return
+ * (String) path containing the tuple pairs starting at (r, c) and going up,
+ * right,down,left to form the word required.
+ */
+
+public class Puzzle {
+	private Grid grid;
+	private Deque<Loc> deque;
+
+	@SuppressWarnings("rawtypes")
+	public Puzzle(Grid grid) {
+		this.grid = grid;
+		deque = new Deque<>();
+	}
+
+	public String find(String word, int r, int c) throws EmptyDequeException {
+		ArrayList<String> positions = new ArrayList<>();
+		Loc startPos = BFS(word.charAt(0), r, c);
+		
+		if (startPos != null) {
+			if (DFS(start, word, 0, positions)) {
+				return positions.toString();
+			}
+		}
+
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Loc BFS(char targetChar, int r, int c) throws EmptyDequeException {
+		boolean[][] visited = new boolean[grid.size()][grid.size()];
+		Deque<Loc> queue = new Deque();
+		queue.addToBack(grid.getLoc(r, c));
+		
+		while (!queue.isEmpty()) {
+			Loc curr = queue.getFirst();
+			
+			if (curr == null || visited[curr.getRow()][curr.getCol()]) {
+				continue;
+			}
+			
+			visited[curr.getRow()][curr.getCol()] = true;	
+			
+			if (curr.getVal().equals(String.valueOf(targetChar))) {
+				return curr;
+			}
+			
+			Loc[] neighbors = getNeighbors(curr);
+			
+			for (Loc neighbor : neighbors) {
+				if (neighbor != null && !visited[neighbor.getRow()][neighbor.getCol()]) {
+					queue.addToBack(neighbor);
+				}
+			}
+			
+		}
+		return null;
+	}
+
+	private boolean DFS(Loc location, String word, int index, ArrayList<String> positions) {
+		if (index == word.length()) {
+			return true;
+		}
+		
+		if (location == null || !location.getVal().equals(String.valueOf(word.charAt(index)))) {
+			return false;
+		}
+		
+		positions.add(location.toString());
+		String originalVal = location.getVal();
+		location.setVal("VISITED");
+		
+		Loc[] neighbors = getNeighbors(location);
+		
+		for (Loc neighbor : neighbors) {
+			if (neighbor != null && !neighbor.getVal().equals("VISITED") && DFS(neighbor, word, index + 1, positions)) {
+				location.setVal(originalVal);
+				return true;
+			}
+		}
+		
+		positions.remove(positions.size() - 1);
+		location.setVal(originalVal);
+		return false;
+	}
+
+	private Loc[] getNeighbors(Loc location) {
+		int row = location.getRow();
+		int col = location.getCol();
+		ArrayList<Loc> neighborsList = new ArrayList<>();
+		
+		if (grid.getLoc(row - 1, col) != null) {
+			neighborsList.add(grid.getLoc(row - 1, col));
+		}
+		if (grid.getLoc(row, col + 1) != null) {
+			neighborsList.add(grid.getLoc(row, col + 1));
+		}
+		if (grid.getLoc(row + 1, col) != null) {
+			neighborsList.add(grid.getLoc(row + 1, col));
+		}
+		if (grid.getLoc(row, col - 1) != null) {
+			neighborsList.add(grid.getLoc(row, col - 1));
+		}
+		
+		return neighborsList.toArray(new Loc[neighborsList.size()]);
+		
+	}
+
+}

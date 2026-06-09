@@ -1,0 +1,114 @@
+
+public class testCase1 {
+	private static ArrList act = new ArrList();
+	
+    public static void main(String[] args) {
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	
+    	System.out.println("addFirst(1)");
+    	act.addFirst(1);
+    	
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("1: " + act.indexOf(1));
+    	
+    	System.out.println("addFirst(2)");
+    	act.addFirst(2);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	
+    	System.out.println("addFirst(99)");
+    	act.addFirst(99);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	
+    	System.out.println("addLast(3)");
+    	act.addLast(3);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    
+    	System.out.println("addLast(77)");
+    	act.addLast(77);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	
+    	System.out.println("addLast(67)");
+    	act.addLast(67);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	
+    	System.out.println("addFront(6)");
+    	act.addFirst(6);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	
+    	System.out.println("addFront(9)");
+    	act.addFirst(9);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("9: " + act.indexOf(9));
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	
+    }
+    
+	
+}

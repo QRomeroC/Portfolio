@@ -1,0 +1,8 @@
+INDEX VERSION 1.134+C:\Users\cesar\OneDrive\Desktop\School_Shit\Summer_2024\CSC335\CSC335 Workspace\.metadata\.plugins\org.eclipse.jdt.core
+2680819309.index
+3010713937.index
+3295996359.index
+1865797976.index
+1238349032.index
+712673515.index
+218775912.index

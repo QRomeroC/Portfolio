@@ -1,0 +1,85 @@
+
+public class ArrList {
+	private int intArray[];
+	private int size,n;
+	
+	public ArrList() {
+		intArray = new int[11];
+		size = 11;
+		n = 0;
+	}
+	
+	public void addLast(int num) {
+		
+	}
+	
+	public void addFirst(int num) {
+		
+	}
+	
+	public void add(int i, int num) throws Exception {
+		
+	}
+	
+	public int get(int i) throws Exception {
+		
+	}
+	
+	public int indeOf(int num) {
+		
+	}
+	
+	public boolean contains(int num) {
+		
+	}
+	
+	public boolean isEmpty() {
+		
+	}
+	
+	public int lastIndexOf(int num) {
+		
+	}
+	
+	public int removeFirst() throws Exception {
+		
+	}
+	
+	
+	public int removeLast() throws Exception {
+		
+	}
+	
+	public int removeByIndex(int i) throws Exception {
+		
+	}
+	
+	public boolean removeByValue(int num) throws Exception {
+		
+	}
+	
+	public void removeRange(int i, int j) throws Exception {
+		
+	}
+	
+	public int set(int index, int num) throws Exception {
+		
+	}
+	
+	public int size() {
+		//or retrun n?
+		return this.size;
+	}
+	
+	private boolean isFull() {
+		return n == size;
+	}
+	public int getAccessCount() {
+		return intArray.getAccessCount();
+	}
+	
+	public void resetAccessCount() {
+		intArray.resetAccessCount();
+	}
+	
+}

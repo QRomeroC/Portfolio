@@ -1,0 +1,229 @@
+
+public class ArraySort {
+	
+	public static void sort(Array array, int num, int d) {
+		
+		switch (num) {
+			case 1:;
+				reverseSort(array);
+				return;
+			case 2:
+				maxHeapSort(array);
+				return;
+			case 3:
+				insertionSort(array);
+				return;
+			case 4:
+				relativeAddressing(array, d);
+				return;
+			case 5:
+				array.initExtra(array.length());
+				mergeSort(array, 0, array.length() - 1);
+
+				return;
+			case 6:
+				array.initExtra(array.length());
+				mergeSort(array, 0, array.length() - 1);
+
+			case 7:
+				shellSort(array);
+				//maxHeapSort(array);
+				return;
+		}
+	}//end of public method sort
+	
+	private static void reverseSort(Array array) {
+		int i = 0;
+		int j = array.length() - 1;
+		
+		while (i != j + 1) {
+			array.swap(i, j);
+			i++;
+			j--;
+		}
+		
+	}
+	
+	private static void quickSort(Array array, int i, int j) {
+		//base case (1): i (left most pointer) is equal to or grater than
+		//j (right most pointer - end of array)
+		if (i >= j) {
+			return;
+		}
+		//base case (2): i is negative, i/j is grater than or equal to length of the array 
+		if (i < 0 || i >= array.length() || j >= array.length()) {
+			return;
+		}
+		//get val
+		int currVal = array.getVal(i);
+		//make referance to the index i and i + 1
+		int currIndex = i;
+		int nextIndex = i + 1;
+		
+		for (int k = nextIndex; k <= j; k++) {
+			if (array.getVal(k) < currVal) {
+				array.swap(nextIndex, k);
+				array.swap(currIndex, nextIndex);
+				currIndex++;
+				nextIndex++;
+			} else if (array.getVal(k) == currVal) {
+				array.swap(nextIndex, k);
+				nextIndex++;
+			}
+		}
+		//recursive call(s)
+		//one on i (left most ref) to (currInex (a ref to i) - 1)
+		//one on nextIndex (a ref to i + 1) and j (right most ref)
+		quickSort(array, i, currIndex - 1);
+		quickSort(array, nextIndex, j);
+	}
+	
+	private static void maxHeapSort(Array array) {
+		//bottom up heap construction
+		//parent - floor(k/2)
+		//left child - (2k) + 1
+		//right child - (2k) + 2
+		
+		for (int i = array.length()/2; i >= 0; i--) {
+			sink(array, i, array.length() - 1);
+		}
+		
+		int m = array.length() - 1;
+		
+		while (m > 0) {
+			array.swap(0, m);
+			m--;
+			sink(array, 0, m);
+		}
+		
+	}
+	
+	private static void sink(Array array, int i, int m) {
+		while (2 * i + 1 <= m) {
+			int j = 2 * i + 1; //left child;
+			if (j < m && array.getVal(j) < array.getVal(j + 1)) {
+				j++; // update right child index if value is larger then value at left child
+			}
+			//if value at i > = then val at j no swap
+			if (array.getVal(i) >= array.getVal(j)) {
+				break;
+			}
+			//all other cases swap
+			array.swap(i, j);
+			//update i
+			i = j;
+		}
+	}
+	
+
+	private static void insertionSort(Array array) {
+		//start index at 1 and getting a ref to the index left of i makes my "sorted" subset of array
+		
+		for (int index = 1; index < array.length(); ++index) {
+			int currVal = array.getVal(index);
+			int prevIndex = index - 1;
+			
+			while (prevIndex >= 0 && array.getVal(prevIndex) > currVal) {
+				array.setVal(prevIndex + 1, array.getVal(prevIndex));
+				prevIndex = prevIndex - 1;
+			}
+			
+			array.setVal(prevIndex + 1, currVal);
+			
+		}
+	}
+	
+	private static void mergeSort(Array array, int i, int j) {
+		//base case: single case if j - i < 1, i.e j - i = 0 which only happens when
+		//j = i
+		if (j - i < 1) {
+			return;
+		}
+		//m = half way point
+		int m = (j + i)/2;
+		
+		//recursive calls:
+		//case 1: from i to m (ie left half of mid point;
+		mergeSort(array, i, m);
+		//case 2: from right of mid point to end
+		mergeSort(array, m + 1, j);
+		//after all recursive cases merge will be called as the stack is resolved;
+		//blending all the sub arrays formed from the recursive calls;
+		merge(array, i, m, m + 1, j);
+		
+	}
+	
+	private static void merge(Array array, int a, int b, int x, int y) {
+		int k = a;
+		int c = a;
+		
+		while (a <= b || x <= y) {
+			if (a > b) {
+				array.setExtraVal(c, array.getVal(x));
+				c++;
+				x++;
+			} else if (x > y) {
+				array.setExtraVal(c, array.getVal(a));
+				c++;
+				a++;
+			} else if (array.getVal(a) <= array.getVal(x)) {
+				array.setExtraVal(c, array.getVal(a));
+				c++;
+				a++;
+			} else {
+				array.setExtraVal(c, array.getVal(x));
+				c++;
+				x++;
+			}
+			
+		}//end while
+		
+		for (int i = k; i <= y; i++) {
+			array.setVal(i, array.getExtraVal(i));
+		}
+	}
+	
+	private static void relativeAddressing(Array array, int d) {
+		heapMe(array, d);
+	}
+	
+	private static void heapMe(Array array, int d) {
+		for (int i = (d - 1)/2; i >= 0; i--) {
+			sinkMe(array, i, d);
+		}
+	}
+	
+	private static void sinkMe(Array array, int i, int d){
+		int largest = i;
+		int leftChild = 2 * i + 1;
+		int rightChild = 2 * i + 2;
+		
+		if (leftChild < d && array.getVal(leftChild) > array.getVal(largest)) {
+			largest = leftChild;
+		}
+		
+		if (rightChild < d && array.getVal(rightChild) > array.getVal(largest)) {
+			largest = rightChild;
+		}
+		
+		if (largest != i) {
+			array.swap(i, largest);
+			sinkMe(array, largest, d);
+		}
+	}
+	
+	private static void shellSort(Array array) {
+		int[] hVals = {13, 4, 1};
+		
+		for (int h : hVals) {
+			for (int i = h; i < array.length(); i++) {
+				int currVal = array.getVal(i);
+				int j;
+				for (j = i; j >= h && array.getVal(j - h) > currVal; j -= h) {
+					array.setVal(j, array.getVal(j - h));
+				}
+				array.setVal(j, currVal);
+			}
+		}
+	}
+}

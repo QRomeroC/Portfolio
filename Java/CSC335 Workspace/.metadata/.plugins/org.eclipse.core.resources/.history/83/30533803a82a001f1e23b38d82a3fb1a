@@ -1,0 +1,34 @@
+
+public class testCase1 {
+	private static ArrList act = new ArrList();
+	
+    public static void main(String[] args) {
+    	System.out.println(act.isEmpty());
+    	
+    	act.addFirst(1);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("size: " + act.size());
+   	
+    	act.addFirst(2);
+    	
+   
+    	System.out.println(act.isEmpty());
+    	System.out.println(act.indexOf(2));
+    	System.out.println(act.indexOf(1));
+    	
+    	
+    	act.addLast(3);
+    	System.out.println(act.indexOf(2));
+    	System.out.println(act.indexOf(1));
+    	System.out.println(act.indexOf(3));
+    	
+    	act.addFirst(99);
+    	System.out.println(act.indexOf(99));
+    	System.out.println(act.indexOf(2));
+    	System.out.println(act.indexOf(1));
+    	System.out.println(act.indexOf(3));
+    	System.out.println(act.size());
+
+    }
+	
+}

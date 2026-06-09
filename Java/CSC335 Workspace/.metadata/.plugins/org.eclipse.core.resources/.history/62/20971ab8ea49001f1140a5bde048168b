@@ -1,0 +1,19 @@
+
+public class ArraySort {
+	
+	public static void sort(Array array, int num, int d) {
+		switch (num) {
+		case 1:
+			reverseSort(array);
+			return;
+		}
+	}//end of public method sort
+	
+	private static void reverseSort(Array array) {
+		array.initExtra(array.length());
+		int newIndex = 0;
+		for (int index = array.length() - 1; index >= 0; index--) {
+			array.setExtraVal(newIndex, array.getVal(index));
+		}
+	}
+}

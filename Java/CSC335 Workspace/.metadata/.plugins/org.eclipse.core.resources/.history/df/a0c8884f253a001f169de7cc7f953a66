@@ -1,0 +1,46 @@
+/**
+ * Author: Cesar D. Quihuis-Romero
+ * Purpose: this class, in concert with other associated classes, will utilize a deque data
+ * structure to "solve" a word search puzzle. It will find a series of "paths" (tuples) 
+ * corresponding to the (row, col) location of the individual characters making up the word
+ * 
+ * Methods:
+ * public Puzzle(Grid grid): constructor taking as argument a Grid object 
+ * public String find(String word, int r, int c): find and return (String) path containing the
+ * tuple pairs starting at (r, c) and going up, right,down,left to form the word required. 
+ */
+
+public class Puzzle {
+	private Grid grid;
+	private Deque deque;
+	
+	@SuppressWarnings("rawtypes")
+	public Puzzle(Grid grid) {
+		this.grid = grid;
+		deque = new Deque(); 
+	}
+	
+	public String find(String word, int r, int c) {
+		
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void BFS(Loc node, char letter) throws EmptyDequeException {
+		Deque queue = new Deque();
+		deque.addToBack(letter);
+		//setVal(visited) in LOC or Grid?
+		while (queue.size() > 0) {
+			char currChar =  (Character) queue.getFirst();
+			//previst if needed goes here before generating neighbor list
+			//LOC needs getNeighbors method?
+			Loc[] neighbors = node.getNeighbors(letter);
+			
+			for (int i = 0; i < neighbors.length; i++) {
+				if (neighbors[i].getVal() != "VISITED") {
+					neighbors.setVal("VISITED");
+					queue.addToFront(neighbors[i]);
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,222 @@
+import java.util.ArrayList;
+
+/**
+ * Author: Cesar D. Quihuis-Romero 
+ * Purpose: this class, in concert with other
+ * associated classes, will utilize a deque data structure to "solve" a word
+ * search puzzle. It will find a series of "paths" (tuples) corresponding to the
+ * (row, col) location of the individual characters making up the word
+ * 
+ * Methods: 
+ * public Puzzle(Grid grid): constructor taking as argument a Grid
+ * object 
+ * public String find(String word, int r, int c): find and return
+ * (String) path containing the tuple pairs starting at (r, c) and going up,
+ * right,down,left to form the word required.
+ */
+
+public class Puzzle {
+	private Grid grid;
+	private Deque<Loc> deque;
+	private String searchWord = "";
+	private String path = "";
+
+	@SuppressWarnings("rawtypes")
+	public Puzzle(Grid grid) {
+		this.grid = grid;
+		deque = new Deque<>();
+	}
+
+	public String find(String word, int r, int c) throws EmptyDequeException {
+		//find will start with a BFS to find the first letter and if found DFS to see if a 
+		//mathcing word is yeilded
+		
+		//positions is an array list of tuple pairs as there found during dfs if the letter found 
+		//matches target letter
+//		ArrayList<String> positions = new ArrayList<>();
+		this.searchWord = word;
+		//startPos is assigned to the returned value of BFS which only returns a character 
+		//if matched with target letter
+//		Loc startPos = BFS(word.charAt(0), r, c);
+//		// if startPos != null then it must equal the first char of the word
+//		if (startPos != null) {
+//			//in which case we DFS to see if the surrounding chars continue to match the letters
+//			//from the word
+//			if (DFS(startPos, word, 0, positions)) {
+//				return path;
+//			}
+//		}
+		Loc startPos = grid.getLoc(r, c);
+		
+		if (startPos != null) {
+			deque.addToFront(startPos);
+		}
+		
+		while (!deque.isEmpty()) {
+			BFS();
+		}
+		
+		if (path.length() > 0) {
+			return path;
+		}
+		
+		return "Not Found";
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void BFS() throws EmptyDequeException {
+		if (deque.peekFirst().getStatus().equals("VISITED")) {
+			deque.getFirst();
+			return;
+		}
+		
+		deque.peekFirst().setStatus("VISITED");
+		Loc[] neighbors = getNeighbors(deque.peekFirst());
+		
+		for (Loc neighbor : neighbors) {
+			deque.addToBack(neighbor);
+		}
+		int index = 0;
+		
+		while(!deque.isEmpty()) {
+			DFS(index);
+		}
+		
+//		//BFS makes a queue, adds the value to the queue, sets flag to visited, then checks all 
+//		//neighbors to the starting node.
+//		
+//		ArrayList<Loc> validPos = new ArrayList<>();
+//		int row = 0;
+//		int col = 0;
+//		
+//		while (grid.getVal(row, col) != null) {
+//			validPos.add(grid.getLoc(row, col));
+//			col++;
+//		}
+//		
+//		//visited is a 2d array to match the (x,y) tuples to the a true visited or false not visited status
+//		boolean[][] visited = new boolean[grid.size()][col];
+//		
+//		
+//		//queue uses deque as a queue adding to back and removing from front
+//		Deque<Loc> queue = new Deque();
+//		queue.addToBack(grid.getLoc(r, c));
+//		
+//		while (!queue.isEmpty()) {
+//			Loc curr = queue.getFirst();
+//			
+//			if (curr == null || visited[curr.getRow()][curr.getCol()]) {
+//				continue;
+//			}
+//			
+//			visited[curr.getRow()][curr.getCol()] = true;	
+//			
+//			if (curr.getVal().equals(String.valueOf(targetChar))) {
+//				return curr;
+//			}
+//			
+//			
+//			//neighboring Location objects
+//			Loc[] neighbors = getNeighbors(curr);
+//			
+//			
+//			//for each loop checks each neighbor Loc object in my neighbors list
+//			for (Loc neighbor : neighbors) {
+//				if (neighbor != null && !visited[neighbor.getRow()][neighbor.getCol()]) {
+//					queue.addToBack(neighbor);
+//				}
+//			}
+//			
+//		}
+//		
+//		return null;
+	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	private void DFS(int index) throws EmptyDequeException {
+		
+		if (index == this.searchWord.length()) {
+			return;
+		}
+		
+		if (deque.peekFirst().getVal().equals(searchWord.charAt(index))){
+			path += deque.getFirst().getVal().toString() + " ";
+			DFS(++index);
+			
+		}
+		
+		return;
+//		//DFS normally tracks visited and unvisited nodes, because we deal with same letter being used multiple times
+//		//we track the original value of the target location we set to visited, then override assignment is 
+//		//DFS iterations during neighbor checks.
+//		
+//		//one base case is the index value has reached a length equal to the length of the target word
+//		//the only way index advances is when a target Loc visited during dfs yielded the same letter from the 
+//		//target word. so if this happens enough times to equal word length then we should have found the word
+//		if (index == word.length()) {
+//			return true;
+//		}
+//		//returned if at any point a node value does not equal the same char of the word at a given position within the string
+//		if (location == null || !location.getVal().equals(String.valueOf(word.charAt(index)))) {
+//			return false;
+//		}
+//		
+//		//if not caught by above cases we add to positions our current location (as the current location is a value equal to one character in the string)
+//		positions.add(location.toString());
+//		//hold previous location value
+//		String originalStatus = location.getStatus();
+//		//set current location value to visited
+//		location.setStatus("VISITED");
+//		//generate neighbor list
+//		Loc[] neighbors = getNeighbors(location);
+//		//for each loop on each neighbor location object in neighbors.
+//		for (Loc neighbor : neighbors) {
+//			if (neighbor != null && !neighbor.getStatus().equals("VISITED") && DFS(neighbor, word, index + 1, positions)) {
+//				location.setStatus(originalStatus);
+//				return true;
+//			}
+//		}
+//		//recursive backtracking if we hit a letter that doesn't match we stop, we do not add the current position to our list of positions
+//		//and then back up by one.
+//		positions.remove(positions.size() - 1);
+//		//reset location value to previous state
+//		location.setStatus(originalStatus);
+//		//return false to the caller (which ever recursive call yielded the back path).
+//		return false;
+	}
+
+	private Loc[] getNeighbors(Loc location) {
+		//get neighbors checks if UP, RIGHT, BOTTOM, LEFT of current location
+		//is in bounds using grid.getLoc(), if in bounds then we add to neighbor list
+		int row = location.getRow();
+		int col = location.getCol();
+		ArrayList<Loc> neighborsList = new ArrayList<>();
+		
+		if (grid.getLoc(row - 1, col) != null) {
+			neighborsList.add(grid.getLoc(row - 1, col));
+		}
+		if (grid.getLoc(row, col + 1) != null) {
+			neighborsList.add(grid.getLoc(row, col + 1));
+		}
+		if (grid.getLoc(row + 1, col) != null) {
+			neighborsList.add(grid.getLoc(row + 1, col));
+		}
+		if (grid.getLoc(row, col - 1) != null) {
+			neighborsList.add(grid.getLoc(row, col - 1));
+		}
+		
+		return neighborsList.toArray(new Loc[neighborsList.size()]);
+		
+	}
+	
+//	private String generateString(ArrayList<String> positions) {
+//		String path = "";
+//		
+//		for (String position : positions) {
+//			path += position.toString();
+//		}
+//		
+//		return path;
+//	}
+
+}

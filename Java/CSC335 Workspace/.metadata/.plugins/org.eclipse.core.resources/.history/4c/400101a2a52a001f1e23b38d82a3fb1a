@@ -1,0 +1,30 @@
+
+public class testCase1 {
+	private static ArrList act = new ArrList();
+	
+    public static void main(String[] args) {
+    	System.out.println(act.isEmpty());
+    	
+    	act.addFirst(1);
+    	System.out.println(act.isEmpty());
+    	try {
+			System.out.println(act.get(0));
+		} catch (ListIndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   	
+    	act.addFirst(2);
+    	
+    	try {
+			System.out.println(act.get(0));
+		} catch (ListIndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	System.out.println(act.indexOf(2));
+
+    }
+	
+}

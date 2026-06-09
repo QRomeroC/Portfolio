@@ -1,0 +1,62 @@
+
+public class ArraySort {
+	
+	public static void sort(Array array, int num, int d) {
+	
+		switch (num) {
+			case 1:
+				reverseSort(array);
+				return;
+			case 2:
+				maxHeapSort(array);
+				return;
+			case 3:
+				mergeSort(array);
+				return;
+			case 4:
+				relativeAddressing(array, d);
+				return;
+			case 5:
+				mergeSort(array);
+				return;
+			case 6:
+				mergeSort(array);
+			case 7:
+				maxHeapSort(array);
+				return;
+		}
+	}//end of public method sort
+	
+	private static void reverseSort(Array array) {
+		//array.initExtra(array.length());
+		int newIndex = 0;
+		for (int currIndex = array.length() - 1; currIndex >= 0; currIndex--) {
+			//array.setExtraVal(newIndex, array.getVal(index));
+			array.swap(newIndex, currIndex);
+			newIndex++;
+		}
+		return;
+	}
+	
+	private static void maxHeapSort(Array array) {
+		
+	}
+	
+	private void sink() {
+		
+	}
+	
+	private void swim() {
+		
+	}
+	
+	private static void mergeSort(Array array) {
+		
+	}
+	
+	private static void relativeAddressing(Array array, int d) {
+		
+	}
+
+	
+}

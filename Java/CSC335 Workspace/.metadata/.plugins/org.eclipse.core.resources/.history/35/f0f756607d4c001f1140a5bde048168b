@@ -1,0 +1,19 @@
+
+public class SortGrid {
+	public static void sortA(Grid g) {
+		int col = 0;
+		for (int row = 0; row <= g.size(); row++) {
+			heapRow(g, g.getLoc(row,col),col);
+			col++;
+		}
+	}
+	
+	private static void heapRow(Grid g, Loc currLoc, int col) {
+		for (int i = g.size()/2; i >= 0; i--) {
+			sink(g[i], i, g.size() - 1);
+		}
+	}
+	public static void sortB(Grid g) {
+		
+	}
+}

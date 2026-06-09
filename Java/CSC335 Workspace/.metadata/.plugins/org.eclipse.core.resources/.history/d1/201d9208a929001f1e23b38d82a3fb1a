@@ -1,0 +1,334 @@
+//ArrList.java
+//Author: Cesar D Quihuis-Romero
+//Purpose: create a dynamically re-sizable list structure that is implemented by use of
+//an integer array as standard in Java library.
+//
+
+public class ArrList {
+	private Array intArray;
+	private int size,start,end;
+
+	public ArrList() {
+		intArray = new Array(11);
+		size = 0;
+		start = 0;
+		end = 0;
+	}
+
+	public void addLast(int num) {
+		if (this.isFull()) {
+			this.growArray();
+			intArray.setVal(end, num);;
+			incPointer(end);
+			size++;
+		} else {
+			intArray.setVal(end, num);
+			incPointer(end);
+			size++;
+		}
+
+	}
+
+	public void addFirst(int num) {
+		if (this.isEmpty()) {
+			intArray.setVal(start, num);;
+			incPointer(end);
+			size++;
+		}
+		
+		if (this.isFull()) {
+			growArray();
+		}
+		
+		intArray.setVal(start, num);
+		incPointer(start);
+		size++;
+		
+	}
+
+	public void add(int i, int num) throws Exception {
+
+		if (i<0 || i>=size) {
+			throw new ListIndexOutOfBoundsException();
+		}
+		
+		if (this.isFull()) {
+			growArray();
+		}
+		//what happens to old value at i?
+		intArray.setVal(i, num);
+	}
+
+	public int get(int i) throws Exception {
+		
+		if (i<0 || i>=size) {
+			throw new ListIndexOutOfBoundsException();
+		}
+		
+		if (this.isEmpty()) {
+			throw new EmptyListException();
+		}
+		
+		int indexToGet = ((start - 1) + i) % intArray.length();
+		return intArray.getVal(indexToGet);
+
+	}
+
+	public int indexOf(int num) {
+
+		if (this.isEmpty()) {
+			return -1;
+		}
+
+		if (this.contains(num)) {
+			for (int i = 0; i < size; i++) {
+				if (intArray.getVal(i) == num) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	public boolean contains(int num) {
+		if (this.isEmpty()) {
+			return false;
+		}
+
+		if (start > end) {
+			for (int i = start; i < intArray.length(); i++) {
+				if (intArray.getVal(i) == num) {
+					return true;
+				}
+			}
+			for (int i = 0; i <= end; i++) {
+				if (intArray.getVal(i) == num) {
+					return true;
+				}
+			}
+		} else {
+			for (int i = start; i <= end; i++) {
+				if (intArray.getVal(i) == num) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean isEmpty() {
+		return (size == 0) && (start == end);
+	}
+
+	public int lastIndexOf(int num) {
+		if (this.contains(num)) {
+			for (int i = size - 1; i >= 0; i--) {
+				if (intArray.getVal(i) == num) {
+					return i;
+				}
+			}
+		}
+		return -1;
+
+	}
+
+	public int removeFirst() throws Exception {
+		
+		if (this.isEmpty()) {
+			throw new Exception(); 
+		}
+		
+		int retEle = intArray.getVal(start);
+		
+		if (start == intArray.length() - 1) {
+			start = 0;
+		} else {
+			start++;
+		}
+		
+		int absDist;
+		
+		if (start > end) {
+			absDist = (intArray.length() - start) + end;
+		} else {
+			absDist = end - start;
+		}
+		
+		if (absDist <= intArray.length()/4) {
+			shrinkArray();
+		}
+		
+		return retEle;
+	}
+
+	public int removeLast() throws Exception {
+		if (this.isEmpty()) {
+			throw new Exception();
+		}
+		
+		int retEle = intArray.getVal(end);
+		
+		if (end == 0) {
+			end = intArray.length() - 1;
+		} else {
+			end--;
+		}
+		
+		int absDist;
+		
+		if (start > end) {
+			absDist = (intArray.length() - start) + end;
+		} else {
+			absDist = end - start;
+		}
+		
+		if (absDist <= intArray.length()/4) {
+			shrinkArray();
+		}
+		
+		return retEle;
+	}
+
+	public int removeByIndex(int i) throws Exception {
+		if (!(i >= start) && !(i <= end)) {
+			throw new ListIndexOutOfBoundsException();
+		}
+
+		if (this.isEmpty()) {
+			throw new Exception();
+		}
+		
+		int retEle = intArray.getVal(i);
+		
+		//index 0 or start??
+		if (i == 0) {
+			decPointer(start);
+		} else if (i == intArray.length() - 1) {
+			decPointer(end);
+		} else {
+			for (int index = i; index <= intArray.length() - 1; index++) {
+				int nextVal = intArray.getVal(index + 1);
+				intArray.setVal(i, nextVal);
+			}
+		} 
+		
+		int absDist;
+		
+		if (start > end) {
+			absDist = (intArray.length() - start) + end;
+		} else {
+			absDist = end - start;
+		}
+		
+		if (absDist <= intArray.length()/4) {
+			shrinkArray();
+		}
+		
+		return retEle;
+	}
+
+	public boolean removeByValue(int num) throws Exception {
+		if (this.isEmpty()) {
+			throw new Exception();
+		}
+		if (!this.contains(num)) {
+			return false;
+		} else {
+			int index = this.indexOf(num);
+			this.removeByIndex(index);
+			return true;
+		}
+	}
+
+	public void removeRange(int i, int j) throws Exception {
+
+	}
+
+	public int set(int index, int num) throws Exception {
+		if (this.isEmpty() && index != 0) {
+			throw new ListIndexOutOfBoundsException();
+		}
+
+		if (index > size) {
+			//throw new IndexOutOfBoundsException("your message goes here");
+			throw new ListIndexOutOfBoundsException();
+		}
+
+		int retEle = intArray.getVal(index);
+		intArray.setVal(index, num);
+
+		return retEle;
+	}
+
+	public int size() {
+		return this.size;
+	}
+
+	private boolean isFull() {
+		return size == intArray.length();
+	}
+
+	private void growArray() {
+		Array newArray = new Array(this.size * 2);
+		
+		for (int i = 0; i <= size; i++) {
+			newArray.setVal(i,intArray.getVal(start));
+			incPointer(start);
+		}
+		
+		size = this.size * 2;
+		intArray = newArray;
+	}
+
+	private void shrinkArray() {
+		if (size == 11) {
+			return;
+		}
+		Array newArray = new Array(this.size / 2);
+		size = size / 2;
+		for (int i = start; i <= end; i++) {
+			newArray.setVal(i,this.intArray.getVal(i));
+		}
+		intArray = newArray;
+	}
+	
+	private void incPointer (int pointer) {
+		if (pointer == start) {
+			if (start == 0) {
+				start = intArray.length() - 1;
+			} else {
+				start--;
+			}
+		} else if (pointer == end) {
+			if (end == intArray.length() - 1) {
+				end = 0;
+			} else {
+				end++;
+			}
+		}
+	}
+	
+	private void decPointer (int pointer) {
+		if (pointer == start) {
+			if (start == intArray.length() - 1) {
+				start = 0;
+			} else {
+				start++;
+			}
+		} else if (pointer == end) {
+			if (end == 0) {
+				end = intArray.length() - 1;
+			} else {
+				end--;
+			}
+		}
+	}
+	public int getAccessCount() {
+		return intArray.getAccessCount();
+	}
+	
+	public void resetAccessCount() {
+		intArray.resetAccessCount();
+	}
+
+}

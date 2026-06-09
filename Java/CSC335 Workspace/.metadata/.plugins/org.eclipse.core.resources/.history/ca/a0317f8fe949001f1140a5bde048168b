@@ -1,0 +1,6 @@
+
+public class ArraySort {
+	public static void sort(Array array, int num, int d) {
+		
+	}
+}

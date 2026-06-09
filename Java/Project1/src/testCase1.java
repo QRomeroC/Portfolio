@@ -1,0 +1,290 @@
+
+public class testCase1 {
+	private static ArrList act = new ArrList();
+	
+    public static void main(String[] args) {
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("\n");
+    	
+    	System.out.println("addFirst(1)");
+    	act.addFirst(1);
+    	
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("\n");
+    	
+    	System.out.println("addFirst(2)");
+    	act.addFirst(2);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("\n");
+    	
+    	System.out.println("addFirst(99)");
+    	act.addFirst(99);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("\n");
+    	
+    	System.out.println("addLast(3)");
+    	act.addLast(3);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("\n");
+    
+    	System.out.println("addLast(77)");
+    	act.addLast(77);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("\n");
+    	
+    	System.out.println("addLast(67)");
+    	act.addLast(67);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("\n");
+    	
+    	System.out.println("addFront(6)");
+    	act.addFirst(6);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("\n");
+    	
+    	System.out.println("addFront(9)");
+    	act.addFirst(9);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("9: " + act.indexOf(9));
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("\n");
+    	
+    	System.out.println("addFront(18)");
+    	act.addFirst(18);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("18: " + act.indexOf(18));
+    	System.out.println("9: " + act.indexOf(9));
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("\n");
+    	
+    	System.out.println("addFront(36)");
+    	act.addFirst(36);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("36: " + act.indexOf(36));
+    	System.out.println("18: " + act.indexOf(18));
+    	System.out.println("9: " + act.indexOf(9));
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("\n");
+    	
+    	System.out.println("addFront(72)");
+    	act.addFirst(72);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("72: " + act.indexOf(72));
+    	System.out.println("36: " + act.indexOf(36));
+    	System.out.println("18: " + act.indexOf(18));
+    	System.out.println("9: " + act.indexOf(9));
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("\n");
+    	
+    	System.out.println("addFront(144)");
+    	act.addFirst(144);
+    	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("144: " + act.indexOf(144));
+    	System.out.println("72: " + act.indexOf(72));
+    	System.out.println("36: " + act.indexOf(36));
+    	System.out.println("18: " + act.indexOf(18));
+    	System.out.println("9: " + act.indexOf(9));
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("\n");
+    	
+        System.out.println("add(0, 444)");
+        try {
+			act.add(0, 444);
+		} catch (ListIndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
+       	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("444: " + act.indexOf(444));
+    	System.out.println("144: " + act.indexOf(144));
+    	System.out.println("72: " + act.indexOf(72));
+    	System.out.println("36: " + act.indexOf(36));
+    	System.out.println("18: " + act.indexOf(18));
+    	System.out.println("9: " + act.indexOf(9));
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("\n");
+    	
+    	
+        System.out.println("add(13, 999)");
+        try {
+			act.add(13, 999);
+		} catch (ListIndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
+       	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("444: " + act.indexOf(444));
+    	System.out.println("144: " + act.indexOf(144));
+    	System.out.println("72: " + act.indexOf(72));
+    	System.out.println("36: " + act.indexOf(36));
+    	System.out.println("18: " + act.indexOf(18));
+    	System.out.println("9: " + act.indexOf(9));
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("999: "  + act.indexOf(999));
+    	System.out.println("\n");
+    	
+        System.out.println("add(7, 4712)");
+        try {
+			act.add(7, 4712);
+		} catch (ListIndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
+       	System.out.println("empty: " + act.isEmpty());
+    	System.out.println("Full: " + act.isFull());
+    	System.out.println("size: " + act.size());
+    	System.out.println("start: " + act.getStart());
+    	System.out.println("end: " + act.getEnd());
+    	System.out.println("444: " + act.indexOf(444));
+    	System.out.println("144: " + act.indexOf(144));
+    	System.out.println("72: " + act.indexOf(72));
+    	System.out.println("36: " + act.indexOf(36));
+    	System.out.println("18: " + act.indexOf(18));
+    	System.out.println("9: " + act.indexOf(9));
+    	System.out.println("6: " + act.indexOf(6));
+    	System.out.println("4712: " + act.indexOf(4712));
+    	System.out.println("99: " + act.indexOf(99));
+    	System.out.println("2: " + act.indexOf(2));
+    	System.out.println("1: " + act.indexOf(1));
+    	System.out.println("3: " + act.indexOf(3));
+    	System.out.println("77: " + act.indexOf(77));
+    	System.out.println("67: " + act.indexOf(67));
+    	System.out.println("999: "  + act.indexOf(999));
+    	System.out.println("\n");
+    }
+    
+
+    
+	
+}

@@ -1,0 +1,354 @@
+//ArrList.java
+//Author: Cesar D Quihuis-Romero
+//Purpose: create a dynamically re-sizable list structure that is implemented by use of
+//an integer array as standard in Java library.
+//
+//private class variables are:
+//intArray = Array Object : used as the underlying structure for our list
+//size = Int : represents the number of elements in our list (count)
+//start = Int : represents the index of the start of the list (expected to be occupied)(pointer to first element)
+//end = Int : represents the index of the end of list (expected to be empty)(pointer to the next unoccupied position to append to).
+
+public class ArrList {
+	private Array intArray;
+	private int size, start, end;
+
+	// constructor
+	public ArrList() {
+		intArray = new Array(11);
+		size = 0;
+		start = 0;
+		end = 0;
+	}
+
+	public void addLast(int num) {
+		// addLast adds to end, then moves pointer.
+
+		if (this.isFull()) {
+			this.growArray();
+		}
+		intArray.setVal(end, num);
+		incPointer(end, 'e');
+		size++;
+	}
+
+	public void addFirst(int num) {
+		if (this.isEmpty()) {
+			intArray.setVal(start, num);
+			incPointer(end, 'e');
+			size++;
+		} else {
+			if (this.isFull()) {
+				growArray();
+				intArray.setVal(start, num);
+				size++;
+			} else {
+				incPointer(start, 's');
+				intArray.setVal(start, num);
+				size++;
+			}
+		}
+
+	}
+
+	public void add(int i, int num) throws ListIndexOutOfBoundsException {
+
+		if (i < 0 || i >= size) {
+			throw new ListIndexOutOfBoundsException();
+		}
+
+		if (this.isFull()) {
+			growArray();
+		}
+
+		if (i == 0) {
+			addFirst(num);
+		} else if (i == size - 1) {
+			addLast(num);
+		} else {
+			int targetIndex = (start + i) % intArray.length();
+			int valAtTarget = intArray.getVal(targetIndex);
+			intArray.setVal(targetIndex, num);
+
+			for (int index = i; index < size; index++) {
+				targetIndex = (start + index) % intArray.length();
+				int nextTarget = targetIndex + 1;
+				int temp = intArray.getVal(nextTarget);
+				intArray.setVal(nextTarget, valAtTarget);
+				targetIndex++;
+				valAtTarget = temp;
+			}
+			incPointer(end, 'e');
+			size++;
+		}
+	}
+
+	public int get(int i) throws ListIndexOutOfBoundsException {
+
+		if (i < 0 || i >= size) {
+			throw new ListIndexOutOfBoundsException();
+		}
+
+		int targetIndex = (start + i) % intArray.length();
+		return intArray.getVal(targetIndex);
+
+	}
+
+	public int indexOf(int num) {
+
+		if (this.isEmpty()) {
+			return -1;
+		}
+
+		for (int i = 0; i < size; i++) {
+			int targetIndex = (start + i) % intArray.length();
+			//System.out.println("ArrList (106) targetIndex: " + targetIndex);
+			//System.out.println("ArrList (107) start: " + this.start);
+			
+			if (intArray.getVal(targetIndex) == num) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+
+	public boolean contains(int num) {
+		if (this.isEmpty()) {
+			return false;
+		}
+		for (int i = 0; i < size; i++) {
+			int targetIndex = (start + i) % intArray.length();
+			if (intArray.getVal(targetIndex) == num) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public boolean isEmpty() {
+		return size == 0;
+	}
+
+	public int lastIndexOf(int num) {
+		for (int i = size - 1; i >= 0; i--) {
+			int targetIndex = (start + i) % intArray.length();
+			if (intArray.getVal(targetIndex) == num) {
+				return i;
+			}
+		}
+		return -1;
+
+	}
+
+	public int removeFirst() throws EmptyListException {
+
+		if (this.isEmpty()) {
+			throw new EmptyListException();
+		}
+
+		int retEle = intArray.getVal(start);
+		decPointer(start, 's');
+		size--;
+		checkShrink();
+		return retEle;
+	}
+
+	public int removeLast() throws EmptyListException {
+
+		if (this.isEmpty()) {
+			throw new EmptyListException();
+		}
+
+		int retEle = intArray.getVal(end);
+
+		decPointer(end, 'e');
+		size--;
+		checkShrink();
+		return retEle;
+	}
+
+	public int removeByIndex(int i) throws EmptyListException, ListIndexOutOfBoundsException {
+		if (this.isEmpty()) {
+			throw new EmptyListException();
+		}
+
+		if ((i < 0) || (i >= size)) {
+			throw new ListIndexOutOfBoundsException();
+		} else {
+			if (i == 0) {
+				return removeFirst();
+			} else if (i == size - 1) {
+				return removeLast();
+			} else {
+
+				int targetIndex = (start + i) % intArray.length();
+				int targetVal = intArray.getVal(targetIndex);
+
+				for (int index = i; index < size; index++) {
+					targetIndex = (start + index) % intArray.length();
+					int nextVal = intArray.getVal(targetIndex + 1);
+					intArray.setVal(targetIndex, nextVal);
+				}
+				decPointer(end, 'e');
+				size--;
+				checkShrink();
+				return targetVal;
+			}
+		}
+
+	}
+
+	public boolean removeByValue(int num) throws EmptyListException {
+		if (this.isEmpty()) {
+			throw new EmptyListException();
+		}
+		if (!this.contains(num)) {
+			return false;
+		} else {
+			int index = this.indexOf(num);
+			// this.removeByIndex(index);
+
+			if (index == start) {
+				removeFirst();
+				return true;
+			} else if (index == end) {
+				removeLast();
+				return true;
+			} else {
+				int targetIndex = (start + index) % intArray.length();
+				for (int i = index; i < size; i++) {
+					int temp = intArray.getVal(targetIndex + 1);
+					intArray.setVal(targetIndex, temp);
+					targetIndex++;
+				}
+				return true;
+			}
+
+		}
+	}
+
+	public void removeRange(int i, int j) throws EmptyListException, ListIndexOutOfBoundsException {
+		if (this.isEmpty()) {
+			throw new EmptyListException();
+		}
+
+		if (i < 0 || j >= size) {
+			throw new ListIndexOutOfBoundsException();
+		} else {
+			for (int index = i; index <= j; index++) {
+				int targetIndex = (start + index) % intArray.length();
+				this.removeByIndex(targetIndex);
+			}
+		}
+
+	}
+
+	public int set(int index, int num) throws ListIndexOutOfBoundsException {
+		if (index < 0 || index >= size) {
+			throw new ListIndexOutOfBoundsException();
+		}
+
+		int targetIndex = (start + index) % intArray.length();
+		int retEle = intArray.getVal(targetIndex);
+		intArray.setVal(targetIndex, num);
+
+		return retEle;
+	}
+
+	public int size() {
+		return this.size;
+	}
+
+	public boolean isFull() {
+		return size == intArray.length();
+	}
+
+	private void growArray() {
+		Array newArray = new Array(this.intArray.length() * 2);
+
+		for (int i = 0; i <= size; i++) {
+			int targetIndex = (start + i) % (intArray.length()-1);
+			newArray.setVal(i, intArray.getVal(targetIndex));
+		}
+
+		intArray = newArray;
+		start = 0;
+		end = size;
+	}
+
+	private void checkShrink() {
+		if (size <= (this.intArray.length() / 4)) {
+			shrinkArray();
+		}
+	}
+
+	private void shrinkArray() {
+		if (this.intArray.length() == 11) {
+			return;
+		}
+
+		Array newArray = new Array(this.intArray.length() / 2);
+
+		for (int i = 0; i <= size; i++) {
+			int index = (start + i) % this.intArray.length();
+			newArray.setVal(i, this.intArray.getVal(index));
+		}
+
+		intArray = newArray;
+		start = 0;
+		end = size;
+	}
+
+	private void incPointer(int pointer, char pointerChar) {
+		if (pointerChar == 's') {
+			if (start == 0) {
+				start = intArray.length() - 1;
+			} else {
+				start--;
+			}
+		} else if (pointerChar == 'e') {
+			if (start == 0) {
+				end++;
+			} else if (start == intArray.length() - 1) {
+				end = 0;
+			} else {
+				end++;
+			}
+		} 
+	}
+
+	private void decPointer(int pointer, char pointerChar) {
+		if (pointerChar == 's') {
+			if (start == intArray.length() - 1) {
+				start = 0;
+			} else {
+				start++;
+			}
+		} else if (pointerChar == 'e') {
+			if (end == 0) {
+				end = intArray.length() - 1;
+			} else {
+				end--;
+			}
+		} 
+	}
+	
+	public int getStart() {
+		return this.start;
+	}
+	
+	public int getEnd() {
+		return this.end;
+	}
+	
+	public int getAccessCount() {
+		return intArray.getAccessCount();
+	}
+
+	public void resetAccessCount() {
+		intArray.resetAccessCount();
+	}
+
+}

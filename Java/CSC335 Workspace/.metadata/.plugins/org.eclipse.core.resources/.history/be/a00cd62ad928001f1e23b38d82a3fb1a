@@ -1,0 +1,274 @@
+//ArrList.java
+//Author: Cesar D Quihuis-Romero
+//Purpose: create a dynamically re-sizable list structure that is implemented by use of
+//an integer array as standard in Java library.
+//
+
+public class ArrList {
+	private int intArray[];
+	private int size, n, count,start,end;
+
+	public ArrList() {
+		intArray = new int[11];
+		size = 11;
+		n = 0;
+		count = 0;
+		start = 0;
+		end = 0;
+	}
+
+	public void addLast(int num) {
+		if (this.isFull()) {
+			this.growArray();
+			intArray[end] = num;
+			end++;
+		} else {
+			intArray[end] = num;
+			end++;
+		}
+
+	}
+
+	public void addFirst(int num) {
+		if (this.isEmpty()) {
+			intArray[start] = num;
+		}
+		
+		if (this.isFull()) {
+			growArray();
+		}
+		
+		if (start == 0) {
+			start = (intArray.length - 1);
+			intArray[start] =  num;
+			start--;
+		} else {
+			start--;
+			intArray[start] = num;
+		}
+	}
+
+	public void add(int i, int num) throws Exception {
+		//exception if int i is out of range of start - end
+		//do i need to do an if (start > end) then 
+		//(intArray.length - start) + end ????
+		
+		if (!(i>=start) && !(i<=end)) {
+			throw new IndexOutOfBoundsException("The selected index is out of range");
+		}
+		
+		if (this.isFull()) {
+			growArray();
+		}
+		//what happens to old value at i?
+		intArray[i] = num;
+	}
+
+	public int get(int i) throws Exception {
+
+		if (this.isEmpty()) {
+			throw new IndexOutOfBoundsException("Value is out or range");
+		}
+		
+		if (!(i >= start) && !(i <= end)) {
+			throw new IndexOutOfBoundsException("Value is out or range");
+		}
+		
+		return intArray[i];
+
+	}
+
+	public int indexOf(int num) {
+
+		if (this.isEmpty()) {
+			return -1;
+		}
+
+		if (this.contains(num)) {
+			for (int i = 0; i < size; i++) {
+				if (intArray[i] == num) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
+	public boolean contains(int num) {
+		if (this.isEmpty()) {
+			return false;
+		}
+
+		for (int element : intArray) {
+			if (element == num) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isEmpty() {
+		if (start == 0 && end == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public int lastIndexOf(int num) {
+		if (this.contains(num)) {
+			for (int i = size - 1; i >= 0; i--) {
+				if (intArray[i] == num) {
+					return i;
+				}
+			}
+		}
+		return -1;
+
+	}
+
+	public int removeFirst() throws Exception {
+		int retEle = intArray[start];
+		start++;
+		int absDist;
+		if (start > end) {
+			absDist = (intArray.length - start) + end;
+		} else {
+			absDist = end - start;
+		}
+		if (absDist <= intArray.length/4) {
+			shrinkArray();
+		}
+		return retEle;
+	}
+
+	public int removeLast() throws Exception {
+		int retEle = intArray[n];
+		if (n < (size / 4)) {
+			shrinkArray();
+			for (int i = 0; i < n - 1; i++) {
+				intArray[i] = intArray[i + 1];
+			}
+			n--;
+		} else {
+			for (int i = 0; i < n - 1; i++) {
+				intArray[i] = intArray[i + 1];
+			}
+			n--;
+		}
+		return retEle;
+	}
+
+	public int removeByIndex(int i) throws Exception {
+		if (i > n) {
+			throw new Exception();
+		}
+
+		if (this.isEmpty()) {
+			throw new Exception();
+		}
+		int retEle = intArray[i];
+		if ((n - 1) < (size / 4)) {
+			shrinkArray();
+			if (i == 0) {
+				for (int j = 0; j < size; j++) {
+					intArray[j] = intArray[j + 1];
+				}
+				n--;
+
+			} else if (i == n) {
+				for (int j = 0; j < n; j++) {
+					intArray[j] = intArray[j];
+				}
+				n--;
+			} else {
+				int[] temp = new int[size];
+				for (int j = 0; j < i; j++) {
+					temp[j] = intArray[j];
+				}
+				for (int j = i + 1; j <= n; j++) {
+					temp[j] = intArray[j];
+				}
+				intArray = temp;
+				n--;
+			}
+		}
+		return retEle;
+	}
+
+	public boolean removeByValue(int num) throws Exception {
+		if (this.isEmpty()) {
+			throw new Exception();
+		}
+		if (!this.contains(num)) {
+			return false;
+		} else {
+			int index = this.indexOf(num);
+			this.removeByIndex(index);
+			n--;
+			return true;
+		}
+	}
+
+	public void removeRange(int i, int j) throws Exception {
+
+	}
+
+	public int set(int index, int num) throws Exception {
+		if (this.isEmpty() && index != 0) {
+			throw new IndexOutOfBoundsException("Index out of range of list");
+		}
+
+		if (index > size) {
+			//throw new IndexOutOfBoundsException("your message goes here");
+			throw new IndexOutOfBoundsException("Index out of range of list");
+		}
+
+		int retEle = intArray[index];
+		intArray[index] = num;
+
+		return retEle;
+	}
+
+	public int size() {
+		// or return start - end?
+		return this.size;
+	}
+
+	private boolean isFull() {
+		return start == end;
+	}
+
+	private void growArray() {
+		int newArray[] = new int[this.size * 2];
+		
+		for (int i = 0; i <= size; i++) {
+			newArray[i] = intArray[start];
+			start++;
+		}
+		
+		size = this.size * 2;
+		intArray = newArray;
+	}
+
+	private void shrinkArray() {
+		if (size == 11) {
+			return;
+		}
+		int[] newArray = new int[this.size / 2];
+		size = size / 2;
+		for (int i = 0; i < size; i++) {
+			newArray[i] = this.intArray[i];
+		}
+		intArray = newArray;
+	}
+//	
+//	public int getAccessCount() {
+//		return intArray.getAccessCount();
+//	}
+//	
+//	public void resetAccessCount() {
+//		intArray.resetAccessCount();
+//	}
+
+}

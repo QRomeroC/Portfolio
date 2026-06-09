@@ -1,0 +1,231 @@
+import java.util.ArrayList;
+
+/**
+ * Author: Cesar D. Quihuis-Romero 
+ * Purpose: this class, in concert with other
+ * associated classes, will utilize a deque data structure to "solve" a word
+ * search puzzle. It will find a series of "paths" (tuples) corresponding to the
+ * (row, col) location of the individual characters making up the word
+ * 
+ * Methods: 
+ * public Puzzle(Grid grid): constructor taking as argument a Grid
+ * object 
+ * public String find(String word, int r, int c): find and return
+ * (String) path containing the tuple pairs starting at (r, c) and going up,
+ * right,down,left to form the word required.
+ */
+
+public class Puzzle {
+	private Grid grid;
+	private Deque<Loc> deque;
+	private String searchWord = "";
+	private String path = "";
+
+	@SuppressWarnings("rawtypes")
+	public Puzzle(Grid grid) {
+		this.grid = grid;
+		deque = new Deque<>();
+	}
+
+	public String find(String word, int r, int c) {
+		//find will start with a BFS to find the first letter and if found DFS to see if a 
+		//mathcing word is yeilded
+		
+		//positions is an array list of tuple pairs as there found during dfs if the letter found 
+		//matches target letter
+//		ArrayList<String> positions = new ArrayList<>();
+		this.searchWord = word;
+		//startPos is assigned to the returned value of BFS which only returns a character 
+		//if matched with target letter
+//		Loc startPos = BFS(word.charAt(0), r, c);
+//		// if startPos != null then it must equal the first char of the word
+//		if (startPos != null) {
+//			//in which case we DFS to see if the surrounding chars continue to match the letters
+//			//from the word
+//			if (DFS(startPos, word, 0, positions)) {
+//				return path;
+//			}
+//		}
+		Loc startPos = grid.getLoc(r, c);
+		System.out.println("(line 50) startPos = " + startPos.toString());
+		if (startPos != null) {
+			deque.addToFront(startPos);
+		}
+		System.out.println("line 54");
+		System.out.println("\n");
+		deque.printDeque();
+		System.out.println("\n");
+		
+		if (!deque.isEmpty()) {
+			BFS();
+		}
+		
+		System.out.println("(line 60) path len = " + path.length());
+		if (path.length() > 0) {
+			return path;
+		}
+		
+		return "Not Found";
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes", "unlikely-arg-type" })
+	private void BFS() {
+	
+		System.out.println("isEmpty() = " + deque.isEmpty());
+		
+		if (deque.isEmpty()) {
+			return;
+		}
+		
+		System.out.println("line 69");
+		System.out.println("\n");
+		if (!deque.isEmpty()) {
+			deque.printDeque();
+		}
+		System.out.println("\n");
+		
+		try {
+//			if (deque.peekFirst().getStatus()) {
+//				deque.getFirst();
+//				BFS();
+//			}
+			while (deque.peekFirst().getStatus()) {
+				deque.getFirst();
+			}
+		} catch (EmptyDequeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Loc firstObject = null;
+		try {
+			firstObject = deque.getFirst();
+		} catch (EmptyDequeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("(Line 93) fistObject getVal = " + firstObject.getVal());
+		System.out.println("(Line 94) chatAt(0) = " + searchWord.charAt(0));
+
+		System.out.println("(Line 95) firstObj getVal.equals = " + firstObject.getVal().equals(String.valueOf(searchWord.charAt(0))));
+		firstObject.setStatus(true);
+		Deque<Loc> neighbors = getNeighbors(firstObject);
+		System.out.println("(Line 110) neighbors.isEmpty = " + neighbors.isEmpty());
+		System.out.println("(Line 111) Neighbors = ");
+		
+		Deque<Loc> toQue = getNeighbors(firstObject);
+		try {
+			queNeighbors(toQue);
+		} catch (EmptyDequeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+
+		neighbors.printDeque();
+		int index = 1;
+		
+		while(!deque.isEmpty()) {
+			if (firstObject.getVal().equals(String.valueOf(searchWord.charAt(0)))) {
+				path += firstObject.getVal();
+				System.out.println("(Line 106) go to dfs!!!");
+				DFS(neighbors, index);
+			}
+			try {
+				deque.getFirst();
+			} catch (EmptyDequeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			BFS();
+		}
+		
+		return;
+
+	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	private void DFS(Deque<Loc> neighborsToCheck, int index) {
+		System.out.println("neighbors is empty: " + neighborsToCheck.isEmpty());
+		neighborsToCheck.printDeque();
+		System.out.println("\n");
+		if (neighborsToCheck.isEmpty()) {
+			System.out.println("DFS Empty");
+			return;
+		}
+		
+//		System.out.println("line 142");
+//		System.out.println("\n");
+//		if (!deque.isEmpty()) {
+//			deque.printDeque();
+//		}
+//		System.out.println("\n");
+		
+		while (!neighborsToCheck.isEmpty()) {
+			try {
+				System.out.println("fistValue = " + neighborsToCheck.peekFirst().getVal());
+				System.out.println("is equal" + neighborsToCheck.peekFirst().getVal().equals(String.valueOf(searchWord.charAt(index))));
+				if (neighborsToCheck.peekFirst().getVal().equals(String.valueOf(searchWord.charAt(index)))){
+					path += grid.getLoc(neighborsToCheck.peekFirst().getRow(), neighborsToCheck.peekFirst().getCol()).toString() + " ";
+					System.out.println("path = " + path);
+					Deque<Loc> nextNeighbors = getNeighbors(neighborsToCheck.peekFirst());
+					nextNeighbors.printDeque();
+					System.out.println("\n");
+					DFS(nextNeighbors, index++);
+				}
+			} catch (EmptyDequeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				neighborsToCheck.getFirst();
+			} catch (EmptyDequeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			DFS(neighborsToCheck, index);
+		}
+		
+	}
+
+	private Deque<Loc> getNeighbors(Loc location) {
+		//get neighbors checks if UP, RIGHT, BOTTOM, LEFT of current location
+		//is in bounds using grid.getLoc(), if in bounds then we add to neighbor list
+		int row = location.getRow();
+		int col = location.getCol();
+		Deque<Loc> neighbors = new Deque<>();
+		
+		if (grid.getLoc(row - 1, col) != null) {
+			neighbors.addToBack(grid.getLoc(row - 1, col));
+		}
+		if (grid.getLoc(row, col + 1) != null) {
+			neighbors.addToBack(grid.getLoc(row, col + 1));
+		}
+		if (grid.getLoc(row + 1, col) != null) {
+			neighbors.addToBack(grid.getLoc(row + 1, col));
+		}
+		if (grid.getLoc(row, col - 1) != null) {
+			neighbors.addToBack(grid.getLoc(row, col - 1));
+		}
+		
+		return neighbors;
+		
+	}
+	
+	private void queNeighbors(Deque<Loc> toQue) throws EmptyDequeException{
+		while (!toQue.isEmpty()) {
+			deque.addToBack(toQue.getFirst());
+		}
+		return;
+	}
+//	private String generateString(ArrayList<String> positions) {
+//		String path = "";
+//		
+//		for (String position : positions) {
+//			path += position.toString();
+//		}
+//		
+//		return path;
+//	}
+
+}

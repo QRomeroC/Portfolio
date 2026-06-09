@@ -1,0 +1,92 @@
+
+public class ArraySort {
+	
+	public static void sort(Array array, int num, int d) {
+	
+		switch (num) {
+			case 1:
+				reverseSort(array);
+				return;
+			case 2:
+				maxHeapSort(array);
+				return;
+			case 3:
+				mergeSort(array);
+				return;
+			case 4:
+				relativeAddressing(array, d);
+				return;
+			case 5:
+				mergeSort(array);
+				return;
+			case 6:
+				mergeSort(array);
+			case 7:
+				maxHeapSort(array);
+				return;
+		}
+	}//end of public method sort
+	
+	private static void reverseSort(Array array) {
+		//array.initExtra(array.length());
+		int newIndex = 0;
+		for (int currIndex = array.length() - 1; currIndex >= 0; currIndex--) {
+			//array.setExtraVal(newIndex, array.getVal(index));
+			array.swap(newIndex, currIndex);
+			newIndex++;
+		}
+		return;
+	}
+	
+	private static void maxHeapSort(Array array) {
+		//bottom up heap construction
+		//parent - floor(k/2)
+		//left child - (2k) + 1
+		//right child - (2k) + 2
+		
+		for (int i = array.length()/2; i >= 0; i--) {
+			sink(array, i, array.length() - 1);
+		}
+		
+		int m = array.length() - 1;
+		
+		while (m > 0) {
+			array.swap(0, m);
+			m--;
+			sink(array, 0, m);
+		}
+		
+	}
+	
+	private static void sink(Array array, int i, int size) {
+		
+	}
+	
+	private void swim() {
+		
+	}
+	
+	private static void mergeSort(Array array) {
+		
+	}
+	
+	private static void relativeAddressing(Array array, int d) {
+		for (int index = 0; index < array.length(); index++) {
+			array.swap(index, index + d);
+			if (index < array.length() - 1) {
+				if (array.getVal(index) > array.getVal(index + 1)) {
+					array.swap(index, index + 1);
+				}
+			}
+		}
+		
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private Class Heap() {
+		private void Heap() {
+			
+		}
+	}
+	
+}

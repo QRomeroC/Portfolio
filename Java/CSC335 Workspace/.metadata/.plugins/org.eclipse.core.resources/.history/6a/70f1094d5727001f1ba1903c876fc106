@@ -1,0 +1,167 @@
+//ArrList.java
+//Author: Cesar D Quihuis-Romero
+//Purpose: create a dynamically re-sizable list structure that is implemented by use of
+//an integer array as standard in Java library.
+//
+
+ public class ArrList {
+	private int intArray[];
+	private int size,n,count;
+	
+	public ArrList() {
+		intArray = new int[11];
+		size = 11;
+		n = 0;
+		count = 0;
+	}
+	
+	public void addLast(int num) {
+		if (this.isFull()) {
+			this.growArray();
+			intArray[n+1] = num;
+			n++;
+			count++;
+		} else {
+			intArray[n+1] = num;
+			n++;
+			count++;
+		}
+
+	}
+	
+	public void addFirst(int num) {
+		if(this.isEmpty()) {
+			intArray[0] = num;
+			n++;
+			count++;
+		} else {
+			if(this.isFull()) {
+				this.growArray();
+				int[] temp = new int[size];
+				temp[0] = num;
+				for (int i = 1; i<size;i++) {
+					temp[i] = this.intArray[i];
+				}
+				intArray = temp;
+				n++;
+				count++;
+			} else {
+				int[] temp = new int[size];
+				temp[0] = num;
+				for (int i = 1; i<size;i++) {
+					temp[i] = this.intArray[i];
+				}
+				intArray = temp;
+				n++;
+				count++;
+			}
+		}
+	}
+	
+	public void add(int i, int num) throws Exception {
+		//is list index meaning an index outside the range of existing elements?
+		if (i >= size) {
+			throw new Exception();
+		}
+		
+		if (this.isFull()) {
+			growArray();
+		}
+		
+		
+	}
+	
+	public int get(int i) throws Exception {
+		//i > n for last element, i > size if index is "out of range" of array, 
+		//thinking its n not size
+		if (i > n) {
+			throw new Exception();
+		}
+		
+		return intArray[i];
+		
+	}
+	
+	public int indeOf(int num) {
+		if (this.contains(num)) {
+			
+			for (int i = 0; i < size; i++) {
+				if (intArray[i] == num) {
+					return i;
+				}
+			}
+		}
+	}
+	
+	public boolean contains(int num) {
+		for (int element : intArray) {
+			if (element == num) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isEmpty() {
+		if (this.intArray.length == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public int lastIndexOf(int num) {
+		
+	}
+	
+	public int removeFirst() throws Exception {
+		
+	}
+	
+	
+	public int removeLast() throws Exception {
+		
+	}
+	
+	public int removeByIndex(int i) throws Exception {
+		
+	}
+	
+	public boolean removeByValue(int num) throws Exception {
+		
+	}
+	
+	public void removeRange(int i, int j) throws Exception {
+		
+	}
+	
+	public int set(int index, int num) throws Exception {
+		
+	}
+	
+	public int size() {
+		//or retrun n?
+		return this.size;
+	}
+	
+	private boolean isFull() {
+		return n == (size - 1);
+	}
+	
+	private void growArray() {
+		int newArray[] = new int[this.size * 2];
+		for (int i = 0; i < size; i++){
+			newArray[i] = intArray[i];
+		}
+		intArray = newArray;
+	}
+	
+	public int getAccessCount() {
+		return intArray.getAccessCount();
+	}
+	
+	public void resetAccessCount() {
+		intArray.resetAccessCount();
+	}
+	
+}

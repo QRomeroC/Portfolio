@@ -1,0 +1,25 @@
+/**
+ * Author: Cesar D. Quihuis-Romero
+ * Purpose: this class, in concert with other associated classes, will utilize a deque data
+ * structure to "solve" a word search puzzle. It will find a series of "paths" (tuples) 
+ * corresponding to the (row, col) location of the individual characters making up the word
+ * 
+ * Methods:
+ * public Puzzle(Grid grid): constructor taking as argument a Grid object 
+ * public String find(String word, int r, int c): find and return (String) path containing the
+ * tuple pairs starting at (r, c) and going up, right,down,left to form the word required. 
+ */
+
+public class Puzzle {
+	private Grid grid;
+	
+	public Puzzle(Grid grid) {
+		this.grid = grid;
+	}
+	
+	public String find(String word, int r, int c) {
+		
+	}
+	
+	private void BFS(Loc )
+}

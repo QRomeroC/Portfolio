@@ -1,0 +1,42 @@
+public class Loc {
+    public final int row;
+    public final int col;
+    private String val;
+	private boolean status;
+    
+    //constructor
+    //x is row, y is column
+    public Loc(int x, int y, String val) {
+    	this.row = x;
+    	this.col = y;
+    	this.val = val;
+    	this.status = false;
+	
+    }
+
+    //returns Loc in the form (row, col)
+    public String toString() {
+	return "(" + row + ", " + col + ")" + "-" + this.val;
+    }
+
+    //returns the String value at this location
+    public String getVal() {
+    	return val;
+    }
+    
+    public int getRow() {
+    	return row;
+    }
+    
+    public int getCol() {
+    	return col;
+    }
+
+	public void setStatus(Boolean newStatus) {
+		this.status = newStatus;
+	}
+    
+	public Boolean getStatus() {
+		return this.status;
+	}
+}
