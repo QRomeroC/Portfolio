@@ -1,0 +1,23 @@
+#!/bin/bash
+
+myProgram=$1
+exProgram="ex$(echo "${1^}")"
+
+for test_file in test*; do
+$myProgram <"$test_file" > myOut 2> myErr
+echo $? >> myOut
+
+$exProgram <"$test_file" > myOut 2> myErr
+echo $? >> exOut	
+
+echo "Test File: $test_file"
+
+echo "stdout diffs:"
+diff myOut exOut
+
+echo "stderr diffs:"
+diff myErr exErr
+
+echo
+
+done

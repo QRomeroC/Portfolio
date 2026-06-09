@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Directories
+testIn="./testIn"
+testOut="./testOut"
+
+# Ensure the output directory exists
+mkdir -p "$testOut"
+
+# Loop over each test file in the testIn directory
+for testFile in "$testIn"/test*.txt; do
+  # Extract the test file name (e.g., test0.txt)
+  testName=$(basename "$testFile")
+  
+  # Run exProgramName with the test file as input and save the output
+  # exProgramName can be used as a place holder or variable, probably going to use it as a variable and pull from current dir, the respective names
+  ./exProgramName < "$testFile" > "$testOut/exProgramName_$testName"
+  # Capture the exit status and append it to the output file
+  echo "Exit status: $?" >> "$testOut/exProgramName_$testName"
+  
+  # Run programName with the test file as input and save the output
+  # programName can be used as a place holder or variable, probably going to use it as a variable and pull from current dir, the respective names
+  ./programName < "$testFile" > "$testOut/programName_$testName"
+  # Capture the exit status and append it to the output file
+  echo "Exit status: $?" >> "$testOut/programName_$testName"
+done
+
+echo "Tests completed. Check the $testOut directory for the results."

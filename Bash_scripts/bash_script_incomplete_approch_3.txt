@@ -1,0 +1,18 @@
+#! /bin/bash
+
+$(rm ./testOut/*);
+
+testFiles=$(ls ./testIn/test*);
+prog="count";
+prog2="exCount";
+
+for X in ${testFiles}; do
+        echo ${X};
+        $(${prog} < ${X} > ./testOut/my_${X});
+        $(echo $? >> ./testOut/my_${X});
+        $(${prog2} < ${X} > ./testOut/ex_${X});
+        $(echo $? >> ./testOut/ex_${X});
+done
+
+exOut=$(ls ex_*.txt);
+myOut=$(ls my_*.txt);

@@ -1,0 +1,16 @@
+#! /bin/bash 
+			#says when you run this thing use the bash shell
+            # -> #! /[location]/[which shell] -> #! indicates it is a script
+
+prog1=$1
+prog2=ex${prog1^}
+./$prog1 <test.txt> myOut
+echo $? >> myOut
+./$prog2 <test.txt> exOut
+echo $? >> exOut
+diff myOut exOut
+
+FILES=$(ls) #./testIn
+for X in ${FILES} ; do
+	echo "File: $X"
+done
