@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Contact </title>
+		<script>
+			function confirm(){
+				var name = document.getElementById("name")
+			
+				var nameVal = name.value
+				var email = document.getElementById("email")
+				var emailVal = email.value
+				var userMessage = document.getElementById("message")
+				var userMessageVal = userMessage.value
+				
+				if (nameVal != "" && emailVal != "" && userMessageVal != ""){
+					window.localStorage.setItem("userName",nameVal)
+					window.localStorage.setItem("userEmail",emailVal)
+					window.localStorage.setItem("userMessage", userMessageVal)
+					var message = `Thank you ${nameVal} for contacnting us!\nA representative will contact you at ${emailVal} regarding your inquiry\n`;
+					alert(message)
+				} else {
+					alert("No submission made: Name, Email, and/or Message left blank\n")
+				}
+			}
+		</script>
+		<style>
+			#banner{
+				background-color: limegreen;
+				padding: 5px;
+			}
+			#navbar{
+				font-size: 20px;
+				text-align: center;
+			}
+			label{
+				display: block;
+				margin-bottom: 5px;
+			}
+			.textInput{
+				display: block;
+				margin-bottom: 10px;
+				padding: 3px;
+				width: 100%;
+			}
+			.radioClass label {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 250px;
+			}
+			
+			#submit{
+				background-color: limegreen;
+				color: white;
+				margin-top: 10px;
+				padding: 10px;
+			}
+		</style>
+	</head>
+	<body style="background-color:lightgray">
+		<div id="banner">
+			<h1>Contact Us!</h1>
+		</div>
+		<div id="navbar">
+			<a href="index.html">Home</a>
+			<a href="about.html">About</a>
+			<a href="portfolio.html">Portfolio</a>
+			<a href="#">Contact</a>
+		</div>
+		<h2>Contact Form</h2>
+		<form id="contact">
+			<label for="name">Name:</label>
+			<input type="text" id="name" class="textInput">
+			<label for="email">Email: </label>
+			<input type="text" id="email" class="textInput">
+			<label for="message">Message: </label>
+			<input type="text" id="message" class="textInput">
+			<h3>Reason for Contact: </h3>
+			<div class = "radioClass">
+				<label for="general">General Question
+					<input type="radio" id="general">
+				</label>
+				<label for="support">Support
+					<input type="radio" id="support">
+				</label>
+				<label for="partnership">Partnership
+					<input type="radio" id="partnership">
+				</label>
+				<label for="tos">I agree to the terms and conditions
+					<input type="checkbox" id="tos">
+				</label>
+			</div>
+			<input type="button" value="Submit Feedback" id="submit" onclick="confirm()">
+		</form>
+	</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Word Counter</title>
+		<script>
+			function getCount(){
+				var input = document.getElementById("in")
+				input = input.value
+				console.log(input)
+				var output = document.getElementById("out")
+				if (input != null || input != " "){
+					input = input.split(" ")
+					
+					var words = {}
+				
+					for (var i = 0; i < input.length; i++){
+						if(words[input[i]]){
+							words[input[i]] += 1
+						} else {
+							words[input[i]] = 1
+						}
+					}
+					var outMsg = ""
+					for (key in words){
+						outMsg +=  key + ": " + words[key] + "\n"
+					}
+					output.innerText = outMsg
+				} else {
+					output.innerText = "Word Count: 0"
+				}
+			}
+		</script>
+		
+		<style>
+			#in{
+				display: block;
+				margin-bottom: 5px;
+			}
+			#count{
+				padding: 10px;
+				margin-bottom: 10px;
+				font-size: 16px;
+			}
+			body{
+				background-color: lightgray;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<h1>Word Frequency Counter</h1>
+		<textarea id="in" name="input" rows="10" cols="50"></textarea>
+		<input type="button" value="Count Words" id="count" onclick="getCount()">
+		<p id="out"></p>
+	</body>
+</html>

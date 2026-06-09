@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Interactive</title>
+		<script>
+			function updateMsg(){
+				var nameObj = document.getElementById("name")
+				var name = nameObj.value
+				var msg = document.getElementById("greeting")
+				msg.innerText = "Welcome! " + name + " This is an interactive form."
+			}
+			
+			function updateColor(){
+				var colorObj = document.getElementById("backColor")
+				var color = colorObj.value
+				console.log(color)
+				var arr = document.getElementsByTagName("body")
+				var body = arr[0]
+				body.style["background-color"] = color
+			}
+			
+			function validate(){
+				var nameObj = document.getElementById("name")
+				var name = nameObj.value
+				if (name == null || name == "" || name == " "){
+					alert("Please enter your name before submitting.")
+				} else {
+					var msg = `Thank You ${name} for your submission!`
+					alert(msg)
+				}
+			}
+		</script>
+		<style>
+		</style>
+	</head>
+	<body>
+		<h1>Interactive Form</h1>
+		<form id="form">
+			<label for="name">Your Name:
+				<input type="text" id="name" oninput="updateMsg()">
+			</label>
+			<p id="greeting"></p>
+			<label for"color">Chose Background Color:
+				<input type="color" id="backColor" oninput="updateColor()">
+			</label>
+		</form>
+		<input type="button" value="Submit" onclick="validate()">
+	</body>
+</html>

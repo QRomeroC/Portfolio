@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Products</title>
+        <script>
+            function toggle(){
+                /*var arr = document.getElementsByTagName("body")
+                var body = arr[0]
+                var curBackground = body.style["background-color"]
+                if(curBackground=="black"){
+                    body.style["background-color"] = "white"
+                    body.style["color"] = "black"
+                }
+                else{
+                    body.style["background-color"] = "black"
+                    body.style["color"] = "white"
+                }*/
+                var theme = window.localStorage.getItem("theme")
+                //alert(theme)
+                var arr = document.getElementsByTagName("body")
+                var body = arr[0]
+                if(theme==null || theme=="black"){
+                    body.style["background-color"] = "white"
+                    body.style["color"] = "black"
+                    window.localStorage.setItem("theme", "white")
+                }
+                else{
+                    body.style["background-color"] = "black"
+                    body.style["color"] = "white"
+                    window.localStorage.setItem("theme", "black")
+                }
+            }
+            function getTheme(){
+                var theme = window.localStorage.getItem("theme")
+                var arr = document.getElementsByTagName("body")
+                var body = arr[0]
+                if(theme=="black"){
+                    body.style["background-color"] = "black"
+                    body.style["color"] = "white"
+                }
+                else{
+                    body.style["background-color"] = "white"
+                    body.style["color"] = "black"
+                }
+            }
+        </script>
+    </head>
+    <!--<body style="background-color: black;color:white">-->
+    <body onload="getTheme()">
+        <h1 style="color:red">Guitar World</h1>
+        <div>
+            <a style="background-color: blue;font-size:25px;color:black" href="home.html">Home</a>
+            <a style="background-color: blue;font-size:25px;color:black" href="about.html">About us</a>
+            <a style="background-color: blue;font-size:25px;color:black" href="store.html">Store</a>
+            <a style="background-color: blue;font-size:25px;color:black" href="order.html">Place order</a>
+            <a style="background-color: blue;font-size:25px;color:black" href="#" onclick="toggle()">Toggle theme</a>
+        </div>
+        <div>
+            <h1>Products</h1>
+            <table style="border-collapse: collapse;">
+                <tr>
+                    <th style="border:1px solid blue">Image</th>
+                    <th style="border:1px solid blue">Name</th>
+                    <th style="border:1px solid blue">Price</th>
+                    <th style="border:1px solid blue">Description</th>
+                </tr>
+                <tr>
+                    <td style="border:1px solid blue">
+                        <img src="taylor.png" alt="Taylor">
+                    </td>
+                    <td style="border:1px solid blue">Taylor 110-GB</td>
+                    <td style="border:1px solid blue">$499.89</td>
+                    <td style="border:1px solid blue">This is a guitar<br> of type Taylor ...</td>
+                </tr>
+                <tr>
+                    <td style="border:1px solid blue">
+                        <img src="taylor.png" alt="Taylor">
+                    </td>
+                    <td style="border:1px solid blue">Taylor 110-GB</td>
+                    <td style="border:1px solid blue">$499.89</td>
+                    <td style="border:1px solid blue">This is a guitar<br> of type Taylor ...</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

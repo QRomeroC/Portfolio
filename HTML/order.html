@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Order</title>
+        <script>
+            function toggle(){
+                /*var arr = document.getElementsByTagName("body")
+                var body = arr[0]
+                var curBackground = body.style["background-color"]
+                if(curBackground=="black"){
+                    body.style["background-color"] = "white"
+                    body.style["color"] = "black"
+                }
+                else{
+                    body.style["background-color"] = "black"
+                    body.style["color"] = "white"
+                }*/
+                var theme = window.localStorage.getItem("theme")
+                //alert(theme)
+                var arr = document.getElementsByTagName("body")
+                var body = arr[0]
+                if(theme==null || theme=="black"){
+                    body.style["background-color"] = "white"
+                    body.style["color"] = "black"
+                    window.localStorage.setItem("theme", "white")
+                }
+                else{
+                    body.style["background-color"] = "black"
+                    body.style["color"] = "white"
+                    window.localStorage.setItem("theme", "black")
+                }
+            }
+            function getTheme(){
+                var theme = window.localStorage.getItem("theme")
+                var arr = document.getElementsByTagName("body")
+                var body = arr[0]
+                if(theme=="black"){
+                    body.style["background-color"] = "black"
+                    body.style["color"] = "white"
+                }
+                else{
+                    body.style["background-color"] = "white"
+                    body.style["color"] = "black"
+                }
+            }
+        </script>
+    </head>
+    <!--<body style="background-color: black;color:white">-->
+    <body onload="getTheme()">
+        <h1 style="color:red">Guitar World</h1>
+        <div>
+            <a style="background-color: blue;font-size:25px;color:black" href="home.html">Home</a>
+            <a style="background-color: blue;font-size:25px;color:black" href="about.html">About us</a>
+            <a style="background-color: blue;font-size:25px;color:black" href="store.html">Store</a>
+            <a style="background-color: blue;font-size:25px;color:black" href="order.html">Place order</a>
+            <a style="background-color: blue;font-size:25px;color:black" href="#" onclick="toggle()">Toggle theme</a>
+        </div>
+        <div>
+            <h1>Order</h1>
+            <form action="">
+                <div style="padding-bottom: 10px;">
+                    Full name <input type="text" placeholder="Jackie Chan">
+                </div>
+                <div style="padding-bottom: 10px;">
+                    CC number <input type="text">
+                </div>
+                <div style="padding-bottom: 10px;">
+                    Age <input type="text">
+                </div>
+                <div style="padding-bottom: 10px;">
+                    Email <input type="text">
+                </div>
+                <div style="padding-bottom: 10px;">
+                    Order to place Taylor 110 gb <input type="radio" name="prodType" checked>
+                    Martin 00x2e <input type="radio" name="prodType">
+                    Ibanez az2402 <input type="radio" name="prodType">
+                </div>
+                <div style="padding-bottom: 10px;">
+                    Case color <input type="color">
+                </div>
+                <div style="padding-bottom: 10px;">
+                    <input type="submit" value="Submit info">
+                </div>
+                
+            </form>
+        </div>
+    </body>
+</html>

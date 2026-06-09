@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            function storeUsername(){
+                var username = document.getElementById('username').value
+                window.localStorage.setItem('username', username)
+            }
+            function updateUrls(){
+                var username = window.localStorage.getItem('username')
+                if(username!=null){
+                    var links = document.getElementsByTagName('a')
+                    for(var i=0;i<links.length;i++){
+                        links[i].href += '?username=' + username
+                    }
+                }
+            }
+            function sendReq(url){
+                var username = window.localStorage.getItem('username')
+                var userObj = {}
+                if(username!=null){
+                    userObj = {'username':username}
+                }
+                
+                fetch(url, {
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify(userObj)
+                })
+                .then(function (res){
+                    return res.text()
+                })
+                .then(function (text){
+                    document.open()
+                    document.write(text)
+                    document.close()
+                })
+                .catch(function (err){
+                    console.log(err)
+                })
+            }
+        </script>
+    </head>
+    <body>
+        <nav>
+            <a onclick="sendReq('home')">Home</a>
+            <a onclick="sendReq('create_user')">Create user</a>
+            <a onclick="sendReq('login')">Login</a>
+            <a onclick="sendReq('manage')">Manage</a>
+        </nav>
+        <div>
+            <form action="lgn_action" method="post">
+                Username: <input type="text" name="username" id="username"><br>
+                Password: <input type="password" name="password"><br>
+                <input type="submit" onclick="storeUsername()">
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			nav{
+				background-color: cyan;
+				text-alignment: center;
+				font-size: 28px;
+				border: 5px solid brown;
+				border-radius: 5px;
+				margin-bottom: 10px;
+			}
+			a{
+				border: 1px solid black;
+				border-radius: 500px;
+				background-color: limegreen;
+			}
+			a:hover{
+				cursor: pointer;
+				background-color: red;
+			}
+			#pixel{
+				border-radius: 5px;
+			}
+			#percent{
+				border-radius: 50%;
+			}
+			#list1{
+				border: 2px solid blue;
+				border-radius: 500px;
+			}
+			#list2{
+				border: 2px solid red;
+				border-radius: 100%;
+			}
+			table,td,th{
+				<!--border-collapse: collapse;--!>
+				border: 1px solid black;
+				border-radius: 100%;
+			}
+			table{
+				border: 1px solid black;
+				border-radius: 20px;
+				margin-bottom: 10px;
+				border-collapse: collapse;
+			}
+			th{
+				border: 1px solid green;
+				border-radius: 10px;
+				
+			}
+			td{
+				border: 1px solid orange;
+			}
+			textarea{
+				border: 1px solid maroon;
+				border-radius: 10px;
+				margin-bottom: 50px;
+			}
+			textarea:hover{
+				cursor: pointer;
+				background-color: green;
+			}
+			#name{
+				text-alignment: right-justify;
+				border: 1px solid cyan;
+				border-radius: 10px;
+			}
+			body{
+				text-alignment: left;
+			}
+			
+		
+		</style>
+	</head>
+	<body>
+		<nav>
+			<a href="#">Home</a>
+			<a href="#">About</a>
+			<a href="#">Contact</a>
+			<a href="#">T</a>
+			<a href="#">TE</a>
+			<a href="#">TES</a>
+			<a href="#">TEST</a>
+			<a href="#">TESTT</a>
+			<a href="#">TESTTE</a>
+			<a href="#">TESTTES</a>
+			<a href="#">TESTTEST</a>
+			<a href="#">This one is really long</a>
+		</nav>
+		<input type="button" id="square" value="square">
+		<input type="button" id="pixel" value="pixel">
+		<input type="button" id="percent" value="percent">
+		<ul id="list1">
+			<li id='item1'>Item 1</li>
+			<li id='item2'>Item 2</li>
+			<li id='item3'>Item 3</li>
+		</ul>
+		<ul id="list2">
+			<li id='item1'>Item 1</li>
+			<li id='item2'>Item 2</li>
+			<li id='item3'>Item 3</li>
+		</ul>
+		<table id="table1">
+			<tr id="headerRow">
+				<th id="head1">Header 1</th>
+				<th id="head2">Header 2</th>
+			</tr>
+			<tr>
+				<td id='data1'>Row 1, Col 1</td>
+				<td id='data2'>Row 1, Col 2</td>
+			</tr>
+			<tr>
+				<td>Row 2, Col 1</td>
+				<td>Row 2, Col 2</td>
+			</tr>
+		</table>
+		
+		<textarea rows="10" cols="27" name="textarea" placeholder="This is placeholder text in a textarea"></textarea>
+		<label for="name">
+			Name: <input type="text" id="name" name="name" placeholder="no br used above me"><br>
+		</label>
+			Age: <input type="number" id="age" placeholder="br used">
+	<body>
+</html>

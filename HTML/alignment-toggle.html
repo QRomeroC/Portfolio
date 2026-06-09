@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			function toggleTextAlignment(){
+				var arr = document.getElementsByTagName("p")
+				var par = arr[0]
+				var curAlignment = par.style["text-align"]
+				if(curAlignment == null || curAlignment == "left" || curAlignment == ""){
+					par.style["text-align"] = "center"
+				} else if (curAlignment == "center"){
+					par.style["text-align"] = "right"
+				} else {
+					par.style["text-align"] = "left"
+				}
+			}
+		</script>
+	</head>
+	
+	<body>
+		<h2>Toggle Text Alignment</h2>
+		<p> Click the link below to toggle the text alignment:</p>
+		<a href="#" onclick="toggleTextAlignment()" style="color:darkred;font-size:20px;padding:10px;font-weight:bold;">Toggle Alignment</a>
+	</body>
+</html>

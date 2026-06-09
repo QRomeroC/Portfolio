@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			function alternate_color(){
+				var rows = document.getElementsByTagName("tr")
+				var data = document.getElementsByTagName("td")
+				for (var r = 0; r < rows.length; r++){
+					if(r % 2 == 0){
+						rows[r].style["background-color"] = "lightgray"
+					}
+				}
+				for (var d = 0; d < data.length; d++){
+					data[d].style["border"] = "2px solid green"
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<a href="#" onclick="alternate_color()">Change color</a>
+		<table>
+			<tr>
+				<td>111</td>
+				<td>222</td>
+			</tr>
+			<tr>
+				<td>333</td>
+				<td>444</td>
+			</tr>
+			<tr>
+				<td>555</td>
+				<td>666</td>
+			</tr>
+			<tr>
+				<td>777</td>
+				<td>888</td>
+			</tr>
+			<tr>
+				<td>999</td>
+				<td>000</td>
+			</tr>
+	</body>
+</html>

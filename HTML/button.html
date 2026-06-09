@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			function changeColor(){
+				var div = document.getElementById("my_div")
+				console.log(div.style)
+				if (div.style["color"] == "black" || div.style["color"] == null || div.style["color"] == ""){
+					div.style["color"] = "red"
+				} else {
+					div.style["color"] = "black"
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="my_div">Some Text...</div>
+		<form action="">
+			<input type="text">
+			<input type="submit">
+			<input type="button" value="click" onclick="changeColor()">
+		</form>
+	
+</html>

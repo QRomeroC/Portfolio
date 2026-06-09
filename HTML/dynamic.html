@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Dynamic</title>
+		<script>
+			var count = 1
+			function addRow(){
+				var tr = document.createElement('tr')
+				tr.setAttribute('id',count)
+				
+				var td_name = document.createElement('td')
+				var name = document.getElementById('name').value
+				var text_name = document.createTextNode(name)
+				td_name.appendChild(text_name)
+				
+				var td_age = document.createElement('td')
+				var age = document.getElementById('age').value
+				var text_age = document.createTextNode(age)
+				td_age.appendChild(text_age)
+				
+				var td_rm = document.createElement('input')
+				td_rm.setAttribute("type","button")
+				td_rm.setAttribute("value","remove")
+				td_rm.setAttribute("onclick","removeRow(" + count + ")")
+				
+				
+				tr.appendChild(td_name)
+				tr.appendChild(td_age)
+				tr.appendChild(td_rm)
+				
+				var table = document.getElementById("my_table")
+				table.appendChild(tr)
+				
+				count += 1
+			}
+			
+			function removeRow(id){
+				document.getElementById(id).remove()
+			}
+		</script>
+		<style>
+			body{
+				background-color: lightgray;
+			}
+		</style>
+	</head>
+	<body>
+		<table id="my_table"></table>
+		<form>
+			<label for="name">Name:
+				<input type="text" id="name">
+			</label>
+			<label for="age">Age:
+				<input type="number" id="age">
+			</label>
+			<input type="button" value="Add" onclick="addRow()">
+		</form>
+	</body>
+</html>

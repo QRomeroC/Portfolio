@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>About</title>
+		
+		<style>
+			#sidebar{
+				background-color: limegreen;
+				float: left;
+				width: 200px;
+				height: 5000px;
+				margin-right: 5px;
+			}
+			a{
+				display: block;
+				font-size: 20px;
+			}
+			#navbarText{
+				display: block;
+			}
+			#content{
+				position: relative;
+				display: inline-block;
+			}
+			#ua{
+				float: right;
+			}
+		</style>
+		
+		<script>
+			function initPage(){
+				updateBackground()
+				getVisibility()
+			}
+			
+			function toggleVis(){
+				var visText = document.getElementById("visibilityText")
+				var disText = document.getElementById("displayText")
+				var textStatus = window.localStorage.getItem("vis-status")
+				
+				if(textStatus == null || textStatus == "" || textStatus == "visible"){
+					visText.style["visibility"] = "hidden"
+					disText.style["display"] = "none"
+					window.localStorage.setItem("vis-status","hidden")
+				} else {
+					visText.style["visibility"] = "visible"
+					disText.style["display"] = "block"
+					window.localStorage.setItem("vis-status","visible")
+				}
+			}
+			
+			function updateBackground(){
+				var arr = document.getElementsByTagName("body")
+                var body = arr[0]
+				body.style["background-color"] = "lightgray"
+			}
+			
+			function getVisibility(){
+				var textStatus = window.localStorage.getItem("vis-status")
+				var visText = document.getElementById("visibilityText")
+				var disText = document.getElementById("displayText")
+				
+				if (textStatus == null || textStatus == "" || textStatus == "visible"){
+					visText.style["visibility"] = "visible"
+					disText.style["display"] = "block"
+				} else {
+					visText.style["visibility"] = "hidden"
+					disText.style["display"] = "none"
+				}
+			}
+		</script>
+	</head>
+	<body onload="initPage()">
+		<div id="sidebar">
+			<h1 id="navbarText">Sidebar Navigation</h1>
+			<a href="index.html">Home</a>
+			<a href="#">About</a>
+			<a href="portfolio.html">Portfolio</a>
+			<a href="contact.html">Contact</a>
+		</div>
+		<div id="content">
+			<h1>About Me<h1>
+			<p> This is a simple about page.</p>
+			<p id="visibilityText"> This element is hidden using visibility</p>
+			<p id="displayText">This element is hidden using display:none.</p>
+			<input type="button" value="Toggle Visibilty" onclick="toggleVis()">
+			<p id="textBlock"> This is a text block. </p>
+			<img src="uofaCS.jpg" id="ua">
+		</div>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			function check(){
+				var text = document.getElementById("my_text")
+				var value = text.value
+				console.log("you entered: ", value)
+				if (value == ""){
+					alert("The text is empty")
+				}
+			}
+		</script>
+	<head>
+	
+	<body>
+		<form>
+			<input id="my_text" type="text">
+			<input type="button" value="click" onclick="check()">
+		</form>
+	</body>
+</html>

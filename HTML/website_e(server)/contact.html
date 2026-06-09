@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Products</title>
+		<style>
+			h1{
+				font-size: 28px;
+			}
+			a{
+				font-size: 20px;
+			}
+			p{
+				font-size: 18px;
+			}
+		</style>
+		<script>
+			function sendReq(url){
+				fetch(url)
+				.then(function (res){
+					return res.text()
+				})
+				.then(function (text){
+					document.open()
+					document.write(text)
+					document.close()
+				})
+				.catch(function (err){
+					console.log(err)
+				})
+			}
+		
+			function randBackground(){
+				var arr = document.getElementsByTagName('body')
+				var body = arr[0]
+				
+				var header = document.getElementById('header')
+				var link = document.getElementById('link')
+				var email = document.getElementById('email')
+				var phone = document.getElementById('phone')
+				
+				var red = Math.random() * 255
+				var green = Math.random() * 255
+				var blue = Math.random() * 255
+				
+				var invRed = 255 - red
+				var invGreen = 255 - green
+				var invBlue = 255 - blue
+				
+				body.style['background-color'] = `rgba(${red},${green},${blue})`
+				header.style['color'] = `rgba(${invRed},${invGreen},${invBlue})`
+				link.style['color'] = `rgba(${invRed},${invGreen},${invBlue})`
+				email.style['color'] = `rgba(${invRed},${invGreen},${invBlue})`
+				phone.style['color'] = `rgba(${invRed},${invGreen},${invBlue})`
+			}	
+		</script>
+	</head>
+	<body onload="randBackground()">
+		<h1 id="header">Contact Information</h1>
+		<a id="link" onclick="sendReq('product')">Our Products</a>
+		<p id="email">Email: contactUs@myCompany.mail.com</p>
+		<p id ="phone">Phone: (555)123-4567</p>
+	</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DOM</title>
+		<script>
+			var count = 0
+			function printTag(elm, level){
+				if (elm == null){
+					return
+				} 
+				
+				count += 1
+				console.log(elm.tagName,level)
+				
+				var children = elm.children
+				
+				for (var i = 0; i < children.length; i++){
+					printTag(children[i], level+1)
+				}
+			}
+			
+		</script>
+		<style>
+			body{
+				background-color: lightgray;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<h1>This is a heading...</h1>
+			<p>This is a paragraph...</p>
+		</div>
+		<div id="mainContent">
+			<p>Another paragraph...</p>
+			<div>
+				Another division
+			</div>
+		</div>
+		<div>
+			<p>Yet another paragraph...</p>
+			<p id="my_p"></p>
+		</div>
+	</body>
+	<script>
+		printTag(document, 0)
+		console.log(count)
+		var p = document.getElementById("my_p")
+		p.innerHTML = " <h1>Hello &lt;World!&gt;</h1>"
+		p.style["background-color"] = "red"
+		p.style.color = "blue"
+		var c = document.getElementById('mainContent')
+		console.log(c.innerText)
+		console.log(c.innerHTML)
+		
+		function getColor(){
+			let randVal = Math.random()
+			if (randVal < 0.3) {return 'red';}
+			else if (randVal < 0.7) {return 'blue';}
+			return 'white';
+		}
+		
+		function patriotify(){
+			var elms = document.getElementById('mainContent');
+			elms.style.backgroundColor = getColor();
+		}
+		window.setInterval(patriotify, 1000);
+	</script>
+</html>

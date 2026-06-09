@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Portfolio</title>
+		
+		<script>
+			function toggleEffectOn(projectToToggle){
+				if (projectToToggle == "p1"){
+					var left = document.getElementById("leftContainer")
+					left.style["background-color"] = "white"
+					left.style["border"] = "1px solid red"
+				} else if (projectToToggle == "p2"){
+					var center = document.getElementById("centerContainer")
+					center.style["background-color"] = "white"
+					center.style["border"] = "1px solid red"
+				} else {
+					var right = document.getElementById("rightContainer")
+					right.style["background-color"] = "white"
+					right.style["border"] = "1px solid red"
+				}
+			}
+			
+			function toggleEffectOff(projectToToggle){
+				if (projectToToggle == "p1"){
+					var left = document.getElementById("leftContainer")
+					left.style["background-color"] = "lightgray"
+					left.style["border"] = "1px solid black"
+				} else if (projectToToggle == "p2"){
+					var center = document.getElementById("centerContainer")
+					center.style["background-color"] = "lightgray"
+					center.style["border"] = "1px solid black"
+				} else {
+					var right = document.getElementById("rightContainer")
+					right.style["background-color"] = "lightgray"
+					right.style["border"] = "1px solid black"
+				}
+			}
+			
+			function confirm(){
+				var name = document.getElementById("name")
+				var nameVal = name.value
+				var email = document.getElementById("email")
+				var emailVal = email.value
+				var userFeedback = document.getElementById("userFeedback")
+				var userFeedbackVal = userFeedback.value
+				
+				if (nameVal != "" && emailVal != "" && userFeedbackVal != ""){
+					window.localStorage.setItem("userName",nameVal)
+					window.localStorage.setItem("userEmail",emailVal)
+					window.localStorage.setItem("userFeedback", userFeedbackVal)
+					var message = `Thank you for your feedback!\nName: ${nameVal}\nEmail: ${emailVal}\nFeedback: ${userFeedbackVal}`;
+					alert(message)
+				} else {
+					alert("No submission made: Name, Email, and/or Feedback left blank")
+				}
+				
+			}
+		</script>
+		
+		<style>
+			#banner{
+				background-color: limegreen;
+				padding: 5px;
+			}
+			#navbar{
+				text-align: center;
+				margin-bottom: 5px;
+				font-size: 20px;
+			}
+			.imgClass{
+				height: 100px;
+				width: 100px;
+			}
+			.outerDiv{
+				justify-content: center;
+			}
+			.container{
+				float: left;
+				margin-right: 20px;
+				text-align: center;
+				width: 400px;
+				border: 1px solid black;
+				background-color: lightgray;
+			}
+			#feedback{
+				display: block;
+				clear: both;
+			}
+			label{
+				display: block;
+				margin-bottom: 5px;
+			}
+			input{
+				display: block;
+				margin-bottom: 10px;
+				padding: 3px;
+			}
+			.textInput{
+				width: 100%;
+			}
+		</style>
+	</head>
+	
+	<body style="background-color:lightgray">
+		<div id="banner">
+			<h1> My Portfolio </h1>
+		</div>
+		<div id="navbar">
+			<a href="index.html">Home</a>
+			<a href="about.html">About</a>
+			<a href="#">Portfolio</a>
+			<a href="contact.html">Contact</a>
+		</div>
+		<div class="outerDiv">
+			<div class="container" id="leftContainer" onmouseenter="toggleEffectOn('p1')" onmouseleave="toggleEffectOff('p1')">
+				<img src="boggle.jpg" id="boggle" class="imgClass">
+				<h2> Project 1 : Boggle</h2>
+				<p>Made a interactive boggle game in java using a gui</p>
+			</div>
+			<div class="container" id="centerContainer" onmouseenter="toggleEffectOn('p2')" onmouseleave="toggleEffectOff('p2')">
+				<img src="markov.jpg" id="markov" class="imgClass">
+				<h2> Project 2 : Hidden Markov </h2>
+				<p>Made a random text generator using a Markov Model</p>
+			</div>
+			<div class="container" id="rightContainer" onmouseenter="toggleEffectOn('p3')" onmouseleave="toggleEffectOff('p3')">
+				<img src="system.jpg" id="system" class="imgClass">
+				<h2> Project 3 : Operating System </h2>
+				<p>Gave it the old college try of making a OS </p>
+			</div>
+		</div>
+		<form id="feedback">
+			<h2> Provide Your Feedback </h2>
+			<label for="name">Name:</label>
+			<input type="text" id="name" class="textInput">
+			<label for="email">Email: </label>
+			<input type="text" id="email" class="textInput">
+			<label for="userFeedback">Your Feedback: </label>
+			<input type="text" id="userFeedback" class="textInput">
+			<input type="button" value="Submit Feedback" onclick="confirm()">
+		</form>
+	</body>
+</html>

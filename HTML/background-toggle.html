@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Background Color Toggle</title>
+		<script>
+			function toggleBackground() {
+				var arr = document.getElementsByTagName("body")
+                var body = arr[0]
+                var curBackground = body.style["background-color"]
+                if(curBackground=="black"){
+                    body.style["background-color"] = "white"
+                    body.style["color"] = "black"
+                }
+                else{
+                    body.style["background-color"] = "black"
+                    body.style["color"] = "white"
+                }
+			}
+		</script>
+	</head>
+	
+	<body>
+		<h1>Toggle Background Color</h1>
+		<p> Click the link below to toggle the background color of the page:</p>
+		<a href="#" onclick="toggleBackground()" style="background-color:blue;color:black;font-size:18px;padding:10px">Toggle Background Color</a>
+	</body>
+	
+</html>

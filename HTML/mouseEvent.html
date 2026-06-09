@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			function foo(){
+				console.log("Hello World!\n")
+			}
+			
+			function flip(img_file){
+				var img = document.getElementById("my_img")
+				img.src = img_file
+			}
+		</script>
+	</head>
+	
+	<body>
+		<img id="my_img" src="systems.jpg" onmouseenter="flip('math.jpg')" onmouseleave="flip('systems.jpg')">
+	</body>
+</html>

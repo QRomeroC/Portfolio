@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Home</title>
+		<style>
+			body{
+				background-color: black;
+			}
+			h1{
+				color: white;
+				font-size: 28px;
+			}
+			p{
+				color: white;
+				font-size: 18px;
+			}
+			a{
+				color: green;
+			}
+			ul{
+				color: white;
+			}
+		</style>
+		<script>
+			function sendReq(url){
+				fetch(url)
+				.then(function (res){
+					return res.text()
+				})
+				.then(function (text){
+					document.open()
+					document.write(text)
+					document.close()
+				})
+				.catch(function (err){
+					console.log(err)
+				})
+			}
+		</script>
+	</head>
+	<body>
+		<h1>Welcome To My Home Page!</h1>
+		<p>This is a basic webpage served by Node.js</p>
+		<ul>
+			<li><a onclick="sendReq('about')">About Me</a></li>
+		</ul>
+	</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Guessing Game</title>
+		
+		<script>
+			function guessNumber(){
+				var number = Math.floor(Math.random() * 100) + 1
+				var input = getInput()
+				var output = document.getElementById("out")
+				var attempts = 0
+				
+				if (input == null || input == "" || input == " "){
+					alert("Please make a guess")
+					guessNumber()
+				} else {
+					while (input != number){
+						if (input < number){
+							attempts += 1
+							alert("Too Low!")
+							input = getInput()
+						} else if (input > number){
+							attempts += 1
+							alert("Too High!")
+							input = getInput()
+						} 
+					}
+					attempts += 1
+					alert("Correct!")
+					output.innerText = `You guessed ${number} in ${attempts} attempts`
+				}
+			}
+			function getInput(){
+				var input = window.prompt("Enter your guess (between 1 and 100 inclusive)")
+				 return input
+			}
+		</script>
+		
+		<style>
+			body{
+				background-color: lightgray;
+			}
+		</style>
+	</head>
+	
+	<body onload="guessNumber()">
+		<p id="out"></p>
+	</body>
+</html>

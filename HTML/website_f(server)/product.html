@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Products</title>
+		<style>
+			h1{
+				font-size: 28px;
+			}
+			a{
+				font-size: 20px;
+			}
+			ul{
+				font-size: 18px;
+			}
+		</style>	
+		<script>
+			function sendReq(url){
+				fetch(url)
+				.then(function (res){
+					return res.text()
+				})
+				.then(function (text){
+					document.open()
+					document.write(text)
+					document.close()
+				})
+				.catch(function (err){
+					console.log(err)
+				})
+			}
+			
+			function randBackground(){
+				var arr = document.getElementsByTagName('body')
+				var body = arr[0]
+				
+				var header = document.getElementById('header')
+				var link = document.getElementById('link')
+				var list = document.getElementById('list')
+				
+				var red = Math.random() * 255
+				var green = Math.random() * 255
+				var blue = Math.random() * 255
+				console.log(`red: ${red}`)
+				console.log(`green: ${green}`)
+				console.log(`blue: ${blue}`)
+				
+				var invRed = 255 - red
+				var invGreen = 255 - green
+				var invBlue = 255 - blue
+				console.log(`invRed: ${invRed}`)
+				console.log(`invGreen: ${invGreen}`)
+				console.log(`invBlue: ${invBlue}`)
+				
+				body.style.backgroundColor = `rgba(${red},${green},${blue})`
+				
+				header.style['color'] = `rgba(${invRed},${invGreen},${invBlue})`
+				link.style['color'] = `rgba(${invRed},${invGreen},${invBlue})`
+				list.style['color'] = `rgba(${invRed},${invGreen},${invBlue})`
+			}
+		</script>
+	</head>
+	<body onload="randBackground()">
+		<h1 id="header">Our Product</h1>
+		<a id="link" onclick="sendReq('contact')">Contact Us</a>
+		<ul id="list">
+			<li>Product 1: Awesome Widget</li>
+			<li>Product 2: Super Gadget</li>
+			<li>Product 3: Amazing Tool</li>
+		</ul>
+	</body>
+</html>

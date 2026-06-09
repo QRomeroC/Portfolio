@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Index</title>
+		
+		<style>
+			#banner{
+				background-color: limegreen;
+				color: white;
+				text-align: center;
+				width: 100%;
+				padding: 15px;
+			}
+			#navbar{
+				font-size: 20px;
+				text-align: center;
+			}
+			#imgBlock{
+				height: 200px;
+				width: 100%;
+				border: 1px solid black;
+				display: inline-block;
+			}
+			#gs{
+				width: 200px;
+				height: 150px;
+				float: left;
+				padding-right: 10px;
+			}
+			#centerBlock{
+				border: 1px solid black;
+				width: 100%;
+			}
+			.blockClass{
+				display: block;
+			}
+			.inlineClass{
+				display: inline;
+			}
+			.bottomBlock{
+				border: 1px solid black;
+				width: 100%;
+			}
+			#footer{
+				background-color: limegreen;
+				color: white;
+				text-align: center;
+				margin-top: 2px;
+				height: 35px;
+				width: 100%;
+			}
+			#footerText{
+				padding: 10px;
+			}
+		</style>
+		<script>
+			function initPage(){
+				getTextColor()
+				pageColor()
+			}
+			
+			function changeTextColor(){
+				var text = document.getElementById("bottomText")
+				var textColor = text.style["color"]
+				
+				if(textColor == "" || textColor == "black"){
+					text.style["color"] = "red"
+					window.localStorage.setItem("style-type","red")
+				} else {
+					text.style["color"] = "black"
+					window.localStorage.setItem("style-type","black")
+				}
+			}
+			
+			function getTextColor(){
+				var styleType = window.localStorage.getItem("style-type")
+				var text = document.getElementById("bottomText")
+	
+				if(styleType == null || styleType == "" || styleType == "black"){
+					text.style["color"] = "black"
+				} else {
+					text.style["color"] = "red"
+				}
+			}
+			
+			function pageColor(){
+				var arr = document.getElementsByTagName("body")
+                var body = arr[0]
+				body.style["background-color"] = "lightgray"
+			}
+			
+		</script>
+	<head>
+	
+	<body onload="initPage()">
+		<div id="banner">
+			<h1>Welcome to My Website</h1>
+		</div>
+		<div id="navbar">
+			<a href="#">Home</a>
+			<a href="about.html">About</a>
+			<a href="portfolio.html">Portfolio</a>
+			<a href="contact.html">Contact</a>
+		</div>
+		<div>
+			<h2>Main Content Area</h2>
+		</div>
+		<div id="imgBlock">
+			<img id="gs" src="gsBuilding.jpg">
+			<span>
+				<p>
+					This paragrah contains an image floated to the left. The text wraps around it.
+				</p>
+			</span>
+		</div>
+		<div id="centerBlock">
+			<p class="blockClass">
+				This is another section. It contains some block elements:
+			</p>
+			<p class="blockClass">
+				Block 1
+			</p>
+			<p class="blockClass">
+				Block 2
+			</p>
+			<p class="blockClass">
+				Block 3
+			</p>
+			<p class="inlineClass">
+				Also it contains some inline elements:
+			</p>
+			<p class="inlineClass">
+				Inline 1,
+			</p>
+			<p class="inlineClass">
+				Inline 2
+			</p>
+		</div>
+		<div class="bottomBlock">
+			<p id="bottomText">
+				The color of this text changes if the button is clicked
+			</p>
+			<input type="button" value="Change Text Color" onclick="changeTextColor()">
+		</div>
+		<div id="footer">
+			<p id="footerText">Website created by Cesar D. Quihuis-Romero</p>
+		</div>
+	</body>
+
+</html>

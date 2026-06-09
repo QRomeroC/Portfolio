@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Recursive</title>
+	
+		<style>
+			body{
+				background-color: lightgray;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Nested List</h1>
+		<ul id="root">
+			<li>Category 1
+				<ul>
+					<li>Subcategory 1.1</li>
+					<li>Subcategory 1.2
+						<ul>
+							<li>Subsub-category 1.2.1</li>
+							<li>Subsub-category 1.2.2</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>Category 2</li>
+			<li>Category 3
+				<ul>
+					<li>Subcategory 3.1</li>
+				</ul>
+			</li>
+		</ul>
+	</body>
+	<script>
+		console.log(document.getElementById("root"))
+		printLevel(document.getElementById("root"),1)
+		function printLevel(elm, level){
+			if (elm == null || elm.tagName != "UL"){
+				return
+			} 
+						
+			var children = elm.children
+				
+			for (var i = 0; i < children.length; i++){
+				var li = children[i]
+				if(li.tagName != "LI"){
+					continue
+				}
+				applyLevelStyle(li,level)
+				
+				var label = li.textContent
+				if (label != ""){
+					console.log("Level " + level + ": " + label);
+				}
+			
+				li.onclick = function(){
+					if(this.style.backgroundColor){
+						this.style.backgroundColor = ""
+					} else {
+						this.style.backgroundColor = "red"
+					}
+				}
+			
+				var grandChildren = li.children
+				for(var j = 0; j<grandChildren.length; j++){
+					printLevel(grandChildren[j],level + 1)
+				}
+			}
+		}
+		
+		function applyLevelStyle(li, level){
+			if (level <= 1){
+				li.style.fontSize = "20px"
+				li.style.color = "#0000FF"
+				li.style.backgroundColor= "#F0F0F0"
+				li.style.padding = "10px"
+				li.style.border = "1px solid #CCCCCC"
+			} else if (level == 2){
+				li.style.fontSize = "18px"
+				li.style.color = "#008000"
+				li.style.backgroundColor = "#E0E0E0"
+				li.style.padding = "10px"
+				li.style.border = "1px solid #CCCCCC"
+			} else {
+				li.style.fontSize = "16px"
+				li.style.color = "#FFA500"
+				li.style.backgroundColor = "#D0D0D0"
+				li.style.padding = "10px"
+				li.style.border = "1px solid #CCCCCC"
+			}
+		}
+	</script>
+</html>

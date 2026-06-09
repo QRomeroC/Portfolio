@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Table</title>
+		<script>
+			var count = 2
+			function add(){
+				var table = document.getElementById("my_table")
+				
+				var nameObj = document.getElementById("name")
+				var name = nameObj.value
+				
+				var ageObj = document.getElementById("age")
+				var age = ageObj.value
+				
+				var cityObj = document.getElementById("city")
+				var city = cityObj.value
+				
+				var newRow = table.insertRow()
+				newRow.setAttribute('id',count)
+				
+				var nameCell = newRow.insertCell(0)
+				var ageCell = newRow.insertCell(1)
+				var cityCell = newRow.insertCell(2)
+				var rmCell = newRow.insertCell(3)
+				
+				nameCell.textContent = name
+				ageCell.textContent = age
+				cityCell.textContent = city
+				
+				var rmBtn = document.createElement("input")
+				rmBtn.type = "button"
+				rmBtn.value = "Delete"
+				rmBtn.onclick = function (){
+					remove(newRow.getAttribute('id'))
+				}
+				rmCell.appendChild(rmBtn)
+				count += 1
+			}
+			
+			function remove(id){
+				document.getElementById(id).remove()
+				count -= 1
+			}
+		</script>
+		<style>
+			table{
+				width: 100%;
+				border-collapse: collapse;
+				text-align: center;
+			}
+			
+			table, th, td{
+				border: 1px solid black;
+			}
+			
+			th {
+				font-weight: bold;
+				background-color: #f0f0f0;
+			}
+			
+			td, th{
+				width: 25%;
+				padding: 6px;
+			}
+			
+			body{
+				background-color: lightgray;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Interactive Table</h1>
+		<table id="my_table">
+			<tr>
+				<th>Name</th>
+				<th>Age</th>
+				<th>City</th>
+				<th>Actions</th>
+			</tr>
+			<tr id="1">
+				<td>John</td>
+				<td>30</td>
+				<td>Tucson</td>
+				<td><input type="button" name="remove" value="Delete" onclick="remove(1)">
+		</table>
+		<h2>Add a New Row</h2>
+		<input type="text" id="name" placeholder="Name">
+		<input type="text" id="age" placeholder="Age">
+		<input type="text" id="city" placeholder="City">
+		<input type="button" name="add" value="Add New" onclick="add()">
+	</body>
+</html>

@@ -1,0 +1,5 @@
+Test,18,test@mail.com,on
+test1,24,test_1@mail.com,undefined
+Test_jr,18,test_jr@mail.com,No
+Test_Sr,65,test_sr@mail.com,Yes
+Tst,17,tst@mail.com,Yes

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			function sendReq(url){
+				fetch(url)
+				.then(function (res){
+					return res.text()
+				})
+				.then(function (text){
+					document.open()
+					document.write(text)
+					document.close()
+				})
+				.catch(function (err){
+					console.log(err)
+				})
+			}
+		</script>
+		<style>
+			a{
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>This is a h1 tag wrapped in a header tag.</h1>
+		</header>
+		<nav>
+			<a href="#">Home</a>
+			<a href="#">Products</a>
+			<a onclick="sendReq('about')">About</a>
+			<a href="#">Create Account</a>
+			<a href="#">Login</a>
+		</nav>
+		<h2>This is a h2 tag</h2>
+		<ul>
+			<li>Item 1</li>
+			<li>Item 2</li>
+			<li>Item 3</li>
+		</ul>
+	</body>
+</html>

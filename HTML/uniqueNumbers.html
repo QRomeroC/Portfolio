@@ -1,0 +1,21 @@
+<!DOCTYPE>
+<html>
+	<body>
+		<script>
+			//input: [1,1,2,4,3,3,2]
+			//output: [1,2,4,3]
+			function uniqueNumbers(numbers){
+				var uniques = []
+				
+				for (var i = 0; i < numbers.length; i++){
+					if (!uniques.includes(numbers[i])) {
+						uniques.push(numbers[i])
+					} 
+				}
+				return uniques
+			}
+			var uniques = uniqueNumbers([1,1,1,2,2,3,5,3,7,5])
+			console.log(uniques)
+		</script>
+	</body>
+</html>

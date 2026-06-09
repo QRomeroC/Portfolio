@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script>
+			function toggleTableStyle(){
+				var rows = document.getElementsByTagName("tr")
+				var data = document.getElementsByTagName("td")
+				var styleType = window.localStorage.getItem("style-type")
+				
+				if (styleType == null || styleType == "style1"){
+					for (var r = 1; r < rows.length; r++){
+						if(r % 2 != 0){
+							rows[r].style["background-color"] = "lightgray"
+						}
+					}
+					for (var d = 0; d < data.length; d++){
+						data[d].style["border"] = "none"
+					}
+					window.localStorage.setItem("style-type","style2")
+				} else if (styleType == "style2"){
+					for (var r = 0; r <rows.length;r++){
+						rows[r].style["background-color"] = "white"
+					}
+					for (var d = 0; d < data.length; d++){
+						data[d].style["border"] = "none"
+					}
+					window.localStorage.setItem("style-type","style3")
+				} else {
+					for (var d = 0; d < data.length; d++){
+						data[d].style["border"] = "1px solid black"
+					}
+					window.localStorage.setItem("style-type","style1")
+				}
+			}
+			
+			function getTableStyle(){
+				var styleType = window.localStorage.getItem("style-type")
+				var rows = document.getElementsByTagName("tr")
+				var data = document.getElementsByTagName("td")
+				
+				if (styleType == "style1"){
+					for (var d = 0;d < data.length; d++){
+						data[d].style["border"] = "1px solid black"
+					}
+				} else if (styleType == "style2"){
+					for (var r = 1; r < rows.length; r++){
+						if (r % 2 != 0){
+							rows[r].style["background-color"] = "lightgray"
+						}
+					}
+					for (var d = 0; d < data.length; d++){
+						data[d].style["border"] = "none"
+					}
+				} else {
+					for (var r = 0; r <rows.length;r++){
+						rows[r].style["background-color"] = "white"
+					}
+					for (var d = 0; d < data.length; d++){
+						data[d].style["border"] = "none"
+					}
+				}
+			}
+					
+		</script>
+	</head>
+	<body onload="getTableStyle()">
+		<h1> Toggle Table Style</h1>
+		<table style="padding-bottom:15px">
+			<tr>
+				<th>Header 1</th>
+				<th>Header 2</th>
+				<th>Header 3</th>
+			</tr>
+			<tr>
+				<td>Row 1, Cell 1</td>
+				<td>Row 1, Cell 2</td>
+				<td>Row 1, Cell 3</td>
+			</tr>
+			<tr>
+				<td>Row 2, Cell 1</td>
+				<td>Row 2, Cell 2</td>
+				<td>Row 2, Cell 3</td>
+			</tr>
+		</table>
+		<a href="#" onclick="toggleTableStyle()" style="background-color:black;color:white;font-size:20px;padding:5px;font-weight:bold">Toggle Table Style</a>
+	</body>
+	
+</html>

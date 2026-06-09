@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Validation</title>
+		
+		<script>
+			function validateInput(){
+				var name = document.getElementById("name")
+				var nameVal = name.value
+				
+				var email = document.getElementById("email")
+				var emailVal = email.value
+				var indexOfAt = emailVal.indexOf("@")
+				var indexOfPeriod = emailVal.indexOf(".")
+				
+				var age = document.getElementById("age")
+				var ageVal = age.value
+				
+				var par = document.getElementById("out")
+				par.innerText = ""
+				
+				console.log(nameVal)
+				console.log(emailVal)
+				console.log(ageVal)
+				
+				var badName = true
+				var badEmail = true
+				var badAge = true
+				
+				if (nameVal != null && nameVal != ""){
+					badName = false
+				}
+				
+				if (emailVal != null && emailVal != ""){
+					if ((indexOfAt != -1 && indexOfPeriod != -1) && (indexOfPeriod > indexOfAt)){
+						badEmail = false
+					}
+				}
+				
+				if (!isNaN(ageVal) && ageVal >= 18 ) {
+					badAge = false
+				}
+			
+				if(badName || badEmail || badAge){
+					var message = 'Name cannot be empty.\nPlease enter a valid email address.\nAge must be above 18.\n'
+					console.log("bad input")
+					par.innerText = message
+				} else {
+					var message = `Thank you ${nameVal} for your submission!`
+					alert(message)
+				}
+				
+			}
+		</script>
+		
+		<style>
+			body{
+				background-color: lightgray;
+			}
+			label{
+				display: block;
+				margin-top: 3px;
+				margin-bottom: 3px;
+			}
+			#validate{
+				margin-top: 15px;
+			}
+			p{
+				color: red;
+			}
+			
+		</style>
+	</head>
+	
+	<body>
+		<h1>Simple Form with Validation</h1>
+		<form>
+			<label for="name" class="lab">Name:
+				<input type="text" id="name">
+			</label>
+			
+			<label for="email" class="lab">Email:
+				<input type="text" id="email">
+			</label>
+			
+			<label for="age" class="lab">Age:
+				<input type="number" id="age">
+			</label>
+			<input type="button" value="Validate" id="validate" onclick="validateInput()">
+		</form>
+		<p id="out"></p>
+	</body>
+</html>
